@@ -1,0 +1,1418 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Dear Diary</title>
+		<meta name="description" content="Engineering Polemic">
+		<link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="Dear Diary">
+		
+		<style>/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0, 0, 0, 0.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}
+/* This is an arbitrary CSS string added to the bundle */
+/* Defaults */
+:root {
+	--font-family: -apple-system, system-ui, sans-serif;
+	--font-family-monospace:
+		Consolas, Menlo, Monaco, Andale Mono WT, Andale Mono, Lucida Console, Lucida Sans Typewriter, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Courier New, Courier, monospace;
+}
+
+/* Theme colors */
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #c0c0c0;
+	--color-gray-90: #333;
+
+	--background-color: #fff;
+
+	--text-color: var(--color-gray-90);
+	--text-color-link: #082840;
+	--text-color-link-active: #5f2b48;
+	--text-color-link-visited: #17050f;
+
+	--syntax-tab-size: 2;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-gray-20: #e0e0e0;
+		--color-gray-50: #c0c0c0;
+		--color-gray-90: #dad8d8;
+
+		/* --text-color is assigned to --color-gray-_ above */
+		--text-color-link: #1493fb;
+		--text-color-link-active: #6969f7;
+		--text-color-link-visited: #a6a6f8;
+
+		--background-color: #15202b;
+	}
+}
+
+/* Global stylesheet */
+* {
+	box-sizing: border-box;
+}
+
+@view-transition {
+	navigation: auto;
+}
+
+html,
+body {
+	padding: 0;
+	margin: 0 auto;
+	font-family: var(--font-family);
+	color: var(--text-color);
+	background-color: var(--background-color);
+}
+html {
+	overflow-y: scroll;
+}
+body {
+	max-width: 40em;
+}
+
+/* https://www.a11yproject.com/posts/how-to-hide-content/ */
+.visually-hidden {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+/* Fluid images via https://www.zachleat.com/web/fluid-images/ */
+img {
+	max-width: 100%;
+}
+img[width][height] {
+	height: auto;
+}
+img[src$=".svg"] {
+	width: 100%;
+	height: auto;
+	max-width: none;
+}
+video,
+iframe {
+	width: 100%;
+	height: auto;
+}
+iframe {
+	aspect-ratio: 16 / 9;
+}
+
+p:last-child {
+	margin-bottom: 0;
+}
+p {
+	line-height: 1.5;
+}
+
+li {
+	line-height: 1.5;
+}
+
+a[href] {
+	color: var(--text-color-link);
+}
+a[href]:visited {
+	color: var(--text-color-link-visited);
+}
+a[href]:hover,
+a[href]:active {
+	color: var(--text-color-link-active);
+}
+
+main,
+footer {
+	padding: 1rem;
+}
+main :first-child {
+	margin-top: 0;
+}
+
+header {
+	border-bottom: 1px dashed var(--color-gray-20);
+}
+
+.links-nextprev {
+	display: flex;
+	justify-content: space-between;
+	gap: .5em 1em;
+	list-style: "";
+	border-top: 1px dashed var(--color-gray-20);
+	padding: 1em 0;
+}
+.links-nextprev > * {
+	flex-grow: 1;
+}
+.links-nextprev-next {
+	text-align: right;
+}
+
+table {
+	margin: 1em 0;
+}
+table td,
+table th {
+	padding-right: 1em;
+}
+
+pre,
+code {
+	font-family: var(--font-family-monospace);
+}
+pre:not([class*="language-"]) {
+	margin: .5em 0;
+	line-height: 1.375; /* 22px /16 */
+	-moz-tab-size: var(--syntax-tab-size);
+	-o-tab-size: var(--syntax-tab-size);
+	tab-size: var(--syntax-tab-size);
+	-webkit-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+	direction: ltr;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	overflow-x: auto;
+}
+code {
+	word-break: break-all;
+}
+
+/* Header */
+header {
+	display: flex;
+	gap: 1em;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1em;
+}
+.home-link {
+	flex-grow: 1;
+	font-size: 1em; /* 16px /16 */
+	font-weight: 700;
+}
+.home-link:link:not(:hover) {
+	text-decoration: none;
+}
+
+/* Nav */
+.nav {
+	display: flex;
+	gap: .5em 1em;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+.nav-item {
+	display: inline-block;
+}
+.nav-item a[href]:not(:hover) {
+	text-decoration: none;
+}
+.nav a[href][aria-current="page"] {
+	text-decoration: underline;
+}
+
+/* Posts list */
+.postlist {
+	list-style: none;
+	padding: 0;
+	padding-left: 1.5rem;
+}
+.postlist-item {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	counter-increment: start-from -1;
+	margin-bottom: 1em;
+}
+.postlist-item:before {
+	display: inline-block;
+	pointer-events: none;
+	content: "" counter(start-from, decimal-leading-zero) ". ";
+	line-height: 100%;
+	text-align: right;
+	margin-left: -1.5rem;
+}
+.postlist-date,
+.postlist-item:before {
+	font-size: 0.8125em; /* 13px /16 */
+	color: var(--color-gray-90);
+}
+.postlist-date {
+	word-spacing: -0.5px;
+}
+.postlist-link {
+	font-size: 1.1875em; /* 19px /16 */
+	font-weight: 700;
+	flex-basis: calc(100% - 1.5rem);
+	padding-left: .25em;
+	padding-right: .5em;
+	text-underline-position: from-font;
+	text-underline-offset: 0;
+	text-decoration-thickness: 1px;
+}
+.postlist-item-active .postlist-link {
+	font-weight: bold;
+}
+
+/* Tags */
+.post-tag {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-transform: capitalize;
+	font-style: italic;
+}
+.postlist-item > .post-tag {
+	align-self: center;
+}
+
+/* Tags list */
+.post-metadata {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: .5em;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.post-metadata time {
+	margin-right: 1em;
+}
+
+
+a {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+/* ***************************  %DEVELOPER DOC% *************************** */
+
+/*
+ * Wrap inline code samples otherwise they shoot of the side and
+ * can't be read at all.
+ */
+
+ code {
+	white-space: pre-wrap;
+	word-wrap: break-word;
+	padding: 2px 5px;
+}
+
+/**
+* Make code blocks display as blocks and give them the appropriate
+* font size and padding.
+*
+*/
+
+pre code {
+white-space: pre;
+word-wrap: normal;
+display: block;
+padding: 12px;
+font-size: 12px;
+}
+
+/*
+* Fix links to have dotted lines instead of normal underline only.
+*
+*/
+
+a {
+text-decoration-style: dotted;
+}
+
+a:hover {
+text-decoration-thickness: 2px;
+}
+
+/*
+* Fix link colors when the link text is inline code.
+*
+*/
+
+a code {
+	color: #2980B9;
+}
+a:hover code {
+	color: #3091d1;
+}
+a:visited code {
+	color: #9B59B6;
+}
+
+/*
+* Enforce CSS classes from highlight.js with theme
+*
+*/
+
+pre .cs, pre .c {
+	font-weight: inherit;
+	font-style: inherit;
+}
+
+/*
+* Fixes issues with non-highlighted code samples.
+*
+*/
+
+.no-highlight {
+display: block;
+padding: 0.5em;
+color: #333;
+}
+
+/*
+* Add some display code to prevent the $ from being copied
+*
+*```bash
+* <screen>
+*!    <prompt>$ <prompt>git clone https://github.com/$USR/$REPO.git
+* </screen>
+*```
+*
+*/
+
+.prompt {
+	user-select: none;
+	-moz-user-select: none;
+}
+
+/*
+* Diff Support
+* @usage
+* <link href="https://unpkg.com/prismjs@1.20.0/themes/prism-okaidia.css" rel="stylesheet">
+*
+*/
+
+.token.deleted {
+background-color: hsl(350deg 100% 88% / 47%);
+}
+.token.inserted {
+background-color: hsl(120deg 73% 75% / 35%);
+}
+
+/*
+* Make the + and - characters unselectable for copy/paste
+*
+*/
+
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+-webkit-user-select: none;
+user-select: none;
+}
+
+/*
+* Optional: full-width background color
+*
+*/
+
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+display: block;
+}
+
+
+/* *************************** %TEXT STYLING% *************************** */
+
+
+/* Paragraphs */
+p, pre {
+margin: 0 auto 1rem;
+}
+:is(p, pre):last-child {
+margin-bottom: 0;
+}
+/* Preformatted text */
+pre {
+position: relative;
+overflow: auto;
+padding: 1rem;
+border-radius: var(--bd-radius);
+background: var(--bg-muted);
+font-size: 0.9rem;
+line-height: 1.6;
+box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+pre > code {
+overflow: visible;
+padding: 0;
+border-radius: 0;
+background: transparent;
+font-size: inherit;
+}
+
+/* Quotation block */
+blockquote {
+padding: 0.5rem 1.5rem;
+border-left: 0.25rem solid var(--primary-color);
+margin: 0 0 1.5rem;
+color: var(--muted);
+background: var(--bg-light);
+border-radius: var(--bd-radius);
+box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+blockquote > cite:last-child {
+display: block;
+padding-left: 2rem;
+margin-top: 0.5rem;
+text-decoration: none;
+font-style: italic;
+}
+
+blockquote > cite:last-child::before {
+content: "— ";
+}
+
+/* *************************** %TABLE STYLING% *************************** */
+
+
+table {
+width: 100%;
+max-width: 100%;
+margin: 0 auto 1rem;
+border-collapse: collapse;
+overflow-x: auto;
+border-radius: 0.5rem;
+box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.table-responsive {
+display: block;
+width: 100%;
+overflow-x: auto;
+}
+
+caption {
+margin-top: 0.5rem;
+caption-side: bottom;
+color: var(--muted);
+font-size: 0.875rem;
+}
+
+tbody > tr:nth-child(2n) {
+background: var(--bg-muted);
+}
+
+th, td {
+padding: 0.75rem 1rem;
+border: 1px solid var(--bd-muted);
+text-align: left;
+}
+
+th {
+background: var(--bg-subtle);
+font-weight: 600;
+color: var(--primary-color);
+text-transform: uppercase;
+letter-spacing: 0.1rem;
+}
+
+td {
+color: var(--text-color);
+}
+
+table.center th, table.center td {
+text-align: center;
+}
+
+/* Hover effects for better interactivity */
+tbody tr:hover {
+background: var(--bg-hover);
+}
+
+th, td {
+transition: background-color 0.3s ease, color 0.3s ease;
+}</style>
+	</head>
+	<body>
+		<a href="#skip" class="visually-hidden">Skip to main content</a>
+
+		<header>
+			<a href="/" class="home-link">Dear Diary</a>
+			<nav>
+				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<ul class="nav">
+					<li class="nav-item"><a href="/">Home</a></li>
+					<li class="nav-item"><a href="/blog/">Archive</a></li>
+					<li class="nav-item"><a href="/about/">About</a></li>
+					<li class="nav-item"><a href="/feed/feed.xml">Feed</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<main id="skip">
+			<heading-anchors>
+				
+<h1></h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2025-03-06">06 March 2025</time></li>
+</ul>
+
+<p>Related to #11105 and #9353.</p>
+<h2 id="abstract-motivation">Abstract / Motivation</h2>
+<p>This proposal changes the way paths in import statements, on the CLI and in Standard JSON are handled by the compiler and translated into internal source unit IDs.</p>
+<p>The goal is to make imports more intuitive by directly exposing user to the way compiler identifies files internally. The current system hides the abstraction that happens between the actual filesystem and compiler's virtual filesystem and makes users expect import paths to behave like filesystem paths even though they work differently.</p>
+<p>The change is meant to preserve a forward-compatible subset of the old syntax to make it possible to have the same files compile with both old and new compiler by only changing the remappings and compiler options.</p>
+<p>The syntax for named roots intentionally follows the established convention of using <code>@</code> placeholders in imports.</p>
+<p>To avoid changing the meaning of existing syntax in a confusing way relative imports of the form <code>import &quot;project/contract.sol&quot;;</code> are disallowed rather than made equivalent to <code>import &quot;./project/contract.sol&quot;;</code> even though having both work the same way would be quite intiuitive.</p>
+<h3 id="examples">Examples</h3>
+<ul>
+<li>
+<p>Many cases of users being confused by the current system (including me :)) can be found in the bug tracker: <a href="https://github.com/ethereum/solidity/issues/9346">[CLI] --base-path unexpectedly effects both import and source URLs #9346</a>, <a href="https://github.com/ethereum/solidity/issues/2266">Standard JSON compilation cannot find or read files. #2266</a>, <a href="https://github.com/ethereum/solidity/issues/9790">Non-deterministic output according to filesystem path #9790</a>, <a href="https://github.com/ethereum/solidity/issues/6487">Different bytecodes for the same contracts #6487</a>, <a href="https://github.com/ethereum/solidity/issues/4914">fail to import the sol in parent path #4914</a>, <a href="https://github.com/ethereum/solidity/issues/11038">Compiler ignores files located under the base path in Standard JSON #11038</a>, <a href="https://gitter.im/ethereum/solidity?at=60521c4883533831b4e736eb">gitter.im/ethereum/solidity?at=60521c4883533831b4e736eb</a>.</p>
+</li>
+<li>
+<p>The path in <code>import &quot;/project/contract.sol&quot;;</code> looks like an absolute path and indeed will load <code>/project/contract.sol</code> in the simplest case. It is however relative to <code>--base-path</code>, just like <code>import &quot;project/contract.sol&quot;;</code>.</p>
+</li>
+<li>
+<p><code>import &quot;./contract.sol&quot;;</code> is relative to the current source file while <code>import &quot;contract.sol&quot;;</code> is relative to the base path (or current working directory if base path is not set). This distinction is not obvious since in the shell both paths are equivalent and lead to the same file.</p>
+</li>
+<li>
+<p>Paths are not normalized which means that <code>project/contract.sol</code> and <code>project//contract.sol</code> are seen as two completely different files (and actually can be different files when the source is provided via Standard JSON) but cause the same file to be loaded from the filesystem. The resulting errors are confusing if the user is not aware of how the compiler decides whether files are distinct or not.</p>
+</li>
+<li>
+<p>Relative paths starting with <code>../</code> or <code>./</code> are normalized, but only partially. If <code>../project//contract.sol</code> is imported from <code>/work//contracts/../token.sol</code>, the path resolves into <code>/work//contracts/contract.sol</code>. Note <code>..</code> being treated as an actual directory and <code>//</code> in one part not being replaced with <code>/</code>.</p>
+</li>
+<li>
+<p>The way a file is referenced on the command line affects whether it matches an import. For example <code>solc contract.sol</code> will be seen by the compiler as the same as <code>import &quot;contract.sol&quot;;</code> but if we go to the parent directory and compile it as <code>solc dir/contract.sol</code> it will be seen as a different file and compiled twice.</p>
+</li>
+<li>
+<p>What's worse, it affects the metadata - both cases produce different bytecode because different paths end up in the metadata - even though the files are identical and still reside in the same directories.</p>
+</li>
+<li>
+<p>When used as a target of a remapping, <code>../</code> no longer works as relative to the source file. It's now relative to the current working directory because the remapping happens after the relative paths are resolved.</p>
+</li>
+</ul>
+<p>There are more examples listed in #11036. While they were originally reported as bugs, ultimately most of them are actually just unintuitive side-effects of the current design that mostly show up in corner cases.</p>
+<h2 id="specification">Specification</h2>
+<h3 id="overview">Overview</h3>
+<p>Paths given in import statements, on the command line and in Standard JSON are used for two purposes:</p>
+<ul>
+<li>
+<p>to find and load the source code into compiler's virtual filesystem,</p>
+</li>
+<li>
+<p>to generate a unique source unit ID that determines whether two paths actually refer to the same source unit.</p>
+</li>
+</ul>
+<p>A source unit ID consists of a named or unnamed root and a source path. E.g. <code>@openzeppelin/utils/math/Math.sol</code> or <code>@/contracts/token.sol</code>.</p>
+<p>There are several ways files can get into the virtual filesystem. The most important one is an import statement. Paths in import statements can be specified in three ways:</p>
+<ol>
+<li>
+<p><strong>Direct import</strong>: specifies the root and source path explicitly: <code>@openzeppelin/utils/math/Math.sol</code>.</p>
+</li>
+<li>
+<p><strong>Relative import</strong>: specifies only a part of the source path, relative to the source ID of the importing file: <code>./math/Math.sol</code> is equivalent to <code>@openzeppelin/utils/math/Math.sol</code> when imported from <code>@openzeppelin/utils/Arrays.sol</code>.</p>
+</li>
+<li>
+<p><strong>Remote import</strong>: uses an URL in place of the root: <code>https://github.com/OpenZeppelin/openzeppelin-contracts/contracts/utils/math/Math.sol</code>.</p>
+</li>
+</ol>
+<p>For a remote import to be valid, user needs to assign a named root to a matching prefix (on the CLI or in Standard JSON). For example <code>https://github.com/OpenZeppelin/openzeppelin-contracts/contracts=@openzeppelin</code>. After the remapping, the path is processed as if it were a direct import. It's also possible to remap one named root to another (e.g. <code>@openzeppelin=@oz</code>). Every remapping to a named root becames a part of contract metadata because the mapping happens between the import path and the source unit ID and changing it may affect the result of the compilation even if the source stays they same.</p>
+<p>In typical usage named roots represent libraries or independent submodules of your project. The main project itself is represented just by <code>@</code>. <code>@</code> is special in that it can represent different directories, depending on where it is used. When used in a file located under some named root it represents that root. This way, when writing a library you can safely refer to its root just as <code>@</code> (i.e. <code>import &quot;@/utils/math/Math.sol&quot;;</code>). A standalone project using your library can refer to library files via a named root (<code>import &quot;@openzeppelin/utils/math/Math.sol&quot;;</code>) and use <code>@</code> for its own files without a conflict. The substitution happens when import path is translated into a source unit ID - in the virtual filesystem the source IDs of library files always contain the full named root.</p>
+<p>To be able to locate the file and load it the compiler passes its source unit ID to the source loader. The loader determines how roots translate to specific locations. In case of the command-line compiler, locations must be existing directories. All named roots must be explicitly mapped for a contract to be compilable. The unnamed root is by default mapped to compiler's working directory but can also be explicitly remapped.</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell">
+solc <span class="token punctuation">..</span>/contracts/contract.sol @openzeppelin<span class="token operator">=</span>node_modules/openzeppelin/contracts/ @<span class="token operator">=</span><span class="token punctuation">..</span>/contracts/
+</code></pre>
+<p>Files on the command line can be specified in two ways:</p>
+<ol>
+<li>
+<p>As filesystem paths: these are platform-specific and can be relative to the current working directory. E.g. <code>../contracts/contract.sol</code> or <code>C:\project\contracts\contract.sol</code>.</p>
+</li>
+<li>
+<p>As source unit IDs: instead of specifying the path directly you specify a source unit ID like <code>@openzeppelin/utils/math/Math.sol</code> and have the compiler resolve it by passing it to the source loader.</p>
+</li>
+</ol>
+<p>When supplying files using Standard JSON, you always specify source IDs yourself. These IDs must of course contain a named or unnamed root. E.g. <code>math/Math.sol</code> is not a valid source unit ID.</p>
+<p>Instead of supplying the source as a part of the JSON file (via the <code>content</code> key) you can specify its location (via the <code>urls</code> key). It can be a path or an URL and whether it can be successfully resolved depends on the compiler interface you use. The command-line interface can only resolve filesystem paths and source unit IDs. The JavaScript interface can also handle URLs or even arbitrary identifiers - it's all up to the user-defined callback.</p>
+<p>Many details in the above description were intentionally omitted to keep it concise. Additional sections below clarify finer points of the new system.</p>
+<h3 id="normalization">Normalization</h3>
+<p>Source unit IDs used internally are always in a normalized form:</p>
+<ul>
+<li>
+<p>Root name can contain only letters, numbers and maybe some safe special characters like <code>_</code> and <code>-</code>.</p>
+</li>
+<li>
+<p>It starts with <code>@</code> and ends with <code>/</code>.</p>
+</li>
+<li>
+<p><code>@</code> and <code>:</code> are not allowed inside root name.</p>
+</li>
+<li>
+<p>Source path:</p>
+</li>
+<li>
+<p>is case-sensitive and in UNIX format regardless of the underlying platform,</p>
+</li>
+<li>
+<p>cannot start with <code>.</code> or contain any <code>./</code> or <code>../</code> segments,</p>
+</li>
+<li>
+<p>does not contain sequences of multiple slashes, trailing slashes, leading/trailing whitespace.</p>
+</li>
+</ul>
+<p>Source IDs specified in Standard JSON must be already normalized. In other contexts compiler may automatically apply some normalization rules:</p>
+<ul>
+<li>
+<p>Relative imports start with <code>./</code>, which is stripped by the compiler.</p>
+</li>
+<li>
+<p>The part of the import that is the prefix is never normalized. Source path (the part left after stripping the prefix) must be normalized like in any other path.</p>
+</li>
+<li>
+<p>Filesystem paths given on the command line undergo the usual normalization expected from shell commands:</p>
+</li>
+<li>
+<p>multiple slashes are squashed into one.</p>
+</li>
+<li>
+<p>relative paths are relative to the current working directory and converted into absolute ones.</p>
+</li>
+<li>
+<p><code>./</code> segments are stripped,</p>
+</li>
+<li>
+<p><code>../</code> segments are collapsed.</p>
+</li>
+<li>
+<p>The path is also converted from a platform-specific format into the UNIX format before it is used to construct source unit ID.</p>
+</li>
+<li>
+<p>Source unit IDs given on the command line must be already normalized.</p>
+</li>
+<li>
+<p>Filesystem paths and source unit IDs given in <code>urls</code> in standard JSON behave just like the ones specified on the command line (though they are never used to form source unit IDs so the only thing that matters is which file they resolve to).</p>
+</li>
+</ul>
+<h3 id="escaping"><code>@</code> escaping</h3>
+<p>An escaping mechanism is needed to discern named roots from paths starting with <code>@</code> character in contexts where both are allowed. For that purpose a leading <code>@@</code> is always interpreted as a single <code>@</code> and causes the following value not to be seen as a root.</p>
+<h3 id="relative-imports">Relative imports</h3>
+<ul>
+<li>
+<p>Relative imports work by taking the source unit ID of the importing module as a base. Everything after the last slash is removed from the importing ID and <code>./</code> is stripped from the import path. Then they are combined.</p>
+</li>
+<li>
+<p>Apart from the leading <code>./</code>, the path must be normalized according to the same rules as source path in source unit IDs.</p>
+</li>
+<li>
+<p>Relative imports <strong>must</strong> start with <code>./</code>. <code>../</code> is not allowed.</p>
+</li>
+</ul>
+<h3 id="remote-imports">Remote imports</h3>
+<ul>
+<li>
+<p>A remote import must start with <code>protocol://</code>, where <code>protocol</code> can be anything except for <code>file</code>.</p>
+</li>
+<li>
+<p>The prefix of any remote import must be mapped to a named root. The length of the prefix is up to the user but it must at least include the <code>protocol://</code> part.</p>
+</li>
+<li>
+<p>The part left after stripping the prefix becomes the source path in the VFS.</p>
+</li>
+<li>
+<p>If multiple remappings match the same prefix, the longer one wins.</p>
+</li>
+</ul>
+<h3 id="import-remapping-vs-root-remapping">Import remapping vs root remapping</h3>
+<p>There are two kinds of remappings:</p>
+<ul>
+<li>
+<p><strong>Import remapping</strong>: always remaps something to a named root.</p>
+</li>
+<li>
+<p>This is allowed from URL prefixes or other named roots.</p>
+</li>
+<li>
+<p>These remappings are included in contract metadata.</p>
+</li>
+<li>
+<p>Remapping to <code>@</code> is not allowed.</p>
+</li>
+<li>
+<p>Remappings are not recursive. <code>@a=@b @b=@c @c=@d</code> will remap <code>@a</code> to <code>@b</code>, not <code>@d</code>.</p>
+</li>
+<li>
+<p>Remapping a root to itself (<code>@abc=@abc</code>) is allowed and can be used as a way to prevent a shorter remapping from matching (e.g. adding <code>@contract=@token</code> to <code>@con=@pro</code> will prevent <code>@contract</code> from being remapped to <code>@protract</code>.</p>
+</li>
+<li>
+<p><strong>Root remapping</strong>: always remaps a root to something that is not a root</p>
+</li>
+<li>
+<p>The target must be something that combined with the source path is recognized by source loader as a valid source location.</p>
+</li>
+<li>
+<p>On the CLI it must be a path. If the path is relative, it's interpreted as relative to current working directory, converted into an absolute one and normalized.</p>
+</li>
+<li>
+<p>In the JavaScript interface it could be an URL or something completely arbitrary.</p>
+</li>
+<li>
+<p>These remappings are system-dependent and not stored in the metadata. Checksums stored in metadata are used instead to ensure that compiler input is the same regardless of the system.</p>
+</li>
+</ul>
+<h3 id="remapping-context">Remapping context</h3>
+<p>To solve conflicts caused by different libraries referring to their dependencies in the same way, it's possible to qualify import remappings with a <em>context</em>.</p>
+<ul>
+<li>
+<p>the context must be a named or unnamed root (filesystem paths are not allowed),</p>
+</li>
+<li>
+<p>context can only be used for <strong>import remappings</strong> from named roots,</p>
+</li>
+<li>
+<p>using context when remapping URL prefixes is not allowed (URLs by their nature are expected to be absolute).</p>
+</li>
+</ul>
+<p>If an import remapping has a context, the substitution is only performed on imports found inside the files located under the named root used as context.</p>
+<p>Examples:</p>
+<pre><code>
+@libA:@oz=@openzeppelin
+
+@libB:@oz=@oz
+
+@oz=@australia
+
+</code></pre>
+<h3 id="supplying-files-on-the-cli">Supplying files on the CLI</h3>
+<p>All filesystem paths specified on the CLI that lead to files to be compiled must be located within one of the roots. Since the unnamed root is by default mapped to current working directory, files from that directory can still be conveniently compiled without specifying any remappings in simple cases. The source unit ID for the file is constructed by normalizing the path and finding the root that is mapped to the longest matching prefix.</p>
+<p>The CLI supports source unit IDs but <strong>not</strong> direct imports. I.e. <code>@</code> never refers to a named root and import remappings are not taken into account.</p>
+<h3 id="supplying-files-via-standard-json">Supplying files via Standard JSON</h3>
+<p>Source unit IDs specified in Standard JSON must be already normalized and contain a root. As a special case it can also be equal to <code>&lt;stdin&gt;</code>. Any other form of an ID is disallowed.</p>
+<p>URLs specified in <code>sources.urls</code> are treated as raw URLs, not remote imports. I.e. remappings are not applied to them. Source unit IDs specified there are also not direct imports.</p>
+<h3 id="standard-input">Standard input</h3>
+<p>A special source ID <code>&lt;stdin&gt;</code> is reserved for the content of compiler's standard input.</p>
+<ul>
+<li>
+<p>It is present in the VFS only when the <code>-</code> command-line flag is specified.</p>
+</li>
+<li>
+<p>It cannot be used in remappings.</p>
+</li>
+<li>
+<p>The parent source ID used when resolving relative imports is <code>@</code>.</p>
+</li>
+<li>
+<p>Its content can be provided explicitly in Standard JSON (to ensure feature parity between Standard JSON and CLI).</p>
+</li>
+</ul>
+<h3 id="base-path">Base path</h3>
+<p>The base path has no function in the new system but could be retained for backwards-compatibility. <code>--base-path &lt;dir&gt;</code> would have the same effect as remapping <code>@=&lt;dir&gt;</code>.</p>
+<h3 id="allowed-paths">Allowed paths</h3>
+<ul>
+<li>
+<p>All directories mapped to named roots are automatically added to the list of allowed directories.</p>
+</li>
+<li>
+<p><code>--allowed-paths</code> option is also still available. It is the only way to compile the project when the directory a root is mapped to contains symlinks that lead outside of it.</p>
+</li>
+</ul>
+<h3 id="possible-extensions">Possible extensions</h3>
+<h4 id="library-path">Library path</h4>
+<p>Specifying mapping for all named roots may be tedious. To make it more convenient we could introduce the concept of library path. It would be defined by a variable called <code>SOLIDITYPATH</code> and work in a way similar to <code>PATH</code> in Bash or <code>PYTHONPATH</code> in Python. All subdirectories of directories listed in <code>SOLIDITYPATH</code> would automatically become valid named roots.</p>
+<h2 id="backwards-compatibility">Backwards-compatibility</h2>
+<p>The proposal only restricts current syntax and does not introduce any new elements.</p>
+<ul>
+<li>
+<p>Imports starting with <code>../</code> and <code>/</code> are no longer allowed.</p>
+</li>
+<li>
+<p>Non-normalized paths are no longer allowed in many contexts</p>
+</li>
+<li>
+<p>Arbitrary mapping targets and prefixes are no longer allowed.</p>
+</li>
+<li>
+<p>Mapping context is must now start with <code>@</code>.</p>
+</li>
+</ul>
+<p>a</p>
+<p>As such it's not backwards-compatible but any file compilable after the change should also be compilable with older compilers given the right remappings.</p>
+<p>Filesystem paths on the CLI will now produce different source unit IDs because paths are absolute and converted to relative to a root (though, arguably, this is how it was originally supposed to work with <code>--base-path</code> and could be considered a bug instead: <a href="https://github.com/ethereum/solidity/issues/11038#issuecomment-793659406">#11038 (comment)</a>).</p>
+<p>To use URLs as imports an intermediate mapping to and from a named root is required. This makes it impossible to support arbitrary URLs (though arbitrary URLs within a single protocol are still possible). Reader callback passed to the JavaScript interface now receives files after root remapping. Before it was getting source unit IDs directly. This will affect Remix IDE.</p>
+<hr>
+<p>https://github.com/ethereum/solidity/issues/11036</p>
+<p>The way the compiler resolves imports into actual filesystem paths is intuitive in simple cases but gets convoluted quickly when you take into account all the factors that can affect it: remappings, base path, various flavors of relative paths, special file names, etc. I checked how it works in corner cases and in a lot of them the beahavior is either buggy or at least does not work the way I would expect it to.</p>
+<h2 id="issues">Issues</h2>
+<p>This section lists problems I have identified. See the reference at the end of the post for detailed examples.</p>
+<ol>
+<li>
+<p>Base path is sometimes prepended to absolute paths.</p>
+<ul>
+<li>Base path is prepended to source directory path in imports starting with <code>.</code> or <code>..</code>.</li>
+<li>Base path is prepended to remapped absolute imports.</li>
+</ul>
+</li>
+<li>
+<p>Imports starting with <code>.</code> or <code>..</code> are not always relative to the source directory</p>
+<ul>
+<li>
+<p>Absolute imports can be remapped into imports starting with <code>.</code> or <code>..</code> but they then become relative to the current working directory.</p>
+</li>
+<li>
+<p>Base path replaces source directory in absolute imports remapped to relative imports starting with <code>.</code> or <code>..</code>.</p>
+<ul>
+<li>It should behave the same way as relative imports starting with <code>..</code> or <code>..</code>.</li>
+</ul>
+</li>
+<li>
+<p>Paths that become relative after stripping of <code>file://</code> are always relative to the current working directory.</p>
+<ul>
+<li>This does not happen when base paths is used.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Using a relative path to the source file on the command line sometimes makes relative imports resolve to different paths than when using an absolute path.</p>
+<ul>
+<li>Remapping of <code>.</code> and <code>..</code> works differently when the path to the source file given to the compiler is relative.</li>
+<li>Remappings ignore any number of leading <code>.</code> and <code>..</code> segments when the path to the source file given to the compiler is relative.</li>
+</ul>
+</li>
+<li>
+<p>Relative paths with <code>..</code> segments that go beyond filesystem root are silently replaced with valid ones.</p>
+<ul>
+<li>Remappings ignore any number of leading <code>.</code> and <code>..</code> segments in imports going beyond the root directory.</li>
+<li>Remappings ignore any number of leading <code>.</code> and <code>..</code> segments when the path to the source file given to the compiler is relative.</li>
+<li>Relative imports going beyond root directory ignore <code>..</code> and are relative to the current working directory (or to the base directory when base path is used).</li>
+</ul>
+</li>
+<li>
+<p>It's possible to remap some of the paths added implicitly to relative imports.</p>
+<ul>
+<li>Parts of the path that <code>.</code> and <code>..</code> get resolved into can get remapped.</li>
+<li>Source directory path can be remapped.</li>
+</ul>
+</li>
+<li>
+<p>Not all prefixes can be remapped.</p>
+<ul>
+<li>Leading <code>.</code> and <code>..</code> in imports cannot be remapped.</li>
+<li><code>file://</code> prefix as a whole cannot be remapped but its fragments can.</li>
+</ul>
+</li>
+<li>
+<p>Special behavior of <code>&lt;stdin&gt;</code>.</p>
+<ul>
+<li>
+<p>A file called <code>&lt;stdin&gt;</code> from current working directory can only be imported if use of the standard input is not requested.</p>
+<ul>
+<li>If a file called <code>&lt;stdin&gt;</code> exists and standard input was requested, importing it should be an error.</li>
+</ul>
+</li>
+<li>
+<p>Behavior of <code>&lt;stdin&gt;</code> in general might be unintended though there's probably no harm in allowing it to be remapped.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Trailing slashes in imports are replaced with <code>/.</code> (unless they start with <code>.</code> or <code>..</code>).</p>
+<ul>
+<li>They should either be stripped or replaced with a single slash.</li>
+</ul>
+</li>
+<li>
+<p>Multiple remappings of the same prefix are ignored and the last one takes effect.</p>
+</li>
+</ol>
+<h2 id="current-path-resolution-behavior">Current path resolution behavior</h2>
+<p>This section is meant mostly as a reference. There's no need to read it all to understand the issue. Skimming the headers should give you a good picture of what is happening.</p>
+<p>Use it to see examples of the problems I listed above or just the current behavior in specific cases.</p>
+<h3 id="common-setup-for-all-examples-below">Common setup for all examples below</h3>
+<ul>
+<li>File containing the imports: <code>/project/contract.sol</code>.</li>
+<li>Working directory: <code>/home/user/work/</code>.</li>
+</ul>
+<h3 id="simple-imports">Simple imports</h3>
+<h4 id="absolute">Absolute</h4>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token keyword">import</span> <span class="token string">"/tmp/code/token.sol"</span><span class="token punctuation">;</span>         <span class="token comment">// -/tmp/code/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"/tmp/code/../code/token.sol"</span><span class="token punctuation">;</span> <span class="token comment">// -/tmp/code/token.sol</span></code></pre>
+<h4 id="relative-imports-are-relative-to-current-working-directory">Relative imports are relative to current working directory</h4>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token keyword">import</span> <span class="token string">"token/token.sol"</span><span class="token punctuation">;</span>     <span class="token comment">// -/home/user/work/token/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">".../token/token.sol"</span><span class="token punctuation">;</span> <span class="token comment">// -/home/user/work/.../token/token.sol</span></code></pre>
+<h4 id="relative-imports-starting-with-or-are-relative-to-the-source-directory">Relative imports starting with <code>.</code> or <code>..</code> are relative to the source directory</h4>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token keyword">import</span> <span class="token string">"./token/token.sol"</span><span class="token punctuation">;</span>          <span class="token comment">// -/project/token/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"../project/token/token.sol"</span><span class="token punctuation">;</span> <span class="token comment">// -/project/token/token.sol</span></code></pre>
+<h4 id="relative-imports-going-beyond-root-directory-ignore-and-are-relative-to-the-current-working-directory">Relative imports going beyond root directory ignore <code>..</code> and are relative to the current working directory</h4>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token keyword">import</span> <span class="token string">"token/token.sol"</span><span class="token punctuation">;</span>                  <span class="token comment">// -/home/user/work/token/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"../token/token.sol"</span><span class="token punctuation">;</span>               <span class="token comment">// -/home/user/token/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"../../token/token.sol"</span><span class="token punctuation">;</span>            <span class="token comment">// -/home/token/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"../../../token/token.sol"</span><span class="token punctuation">;</span>         <span class="token comment">// -/token/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"../../../../token/token.sol"</span><span class="token punctuation">;</span>      <span class="token comment">// -/home/user/work/token/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"../../../../../token/token.sol"</span><span class="token punctuation">;</span>   <span class="token comment">// -/home/user/work/token/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"../../.././../../token/token.sol"</span><span class="token punctuation">;</span> <span class="token comment">// -/home/user/work/token/token.sol</span></code></pre>
+<h3 id="path-remapping">Path Remapping</h3>
+<h4 id="absolute-imports-can-be-remapped">Absolute imports can be remapped</h4>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token comment">// Remappings: /tmp/code=/usr/lib</span>
+<span class="token keyword">import</span> <span class="token string">"/tmp/code/token.sol"</span><span class="token punctuation">;</span> <span class="token comment">// -/usr/lib/token.sol</span></code></pre>
+<h4 id="relative-imports-can-be-remapped">Relative imports can be remapped</h4>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token comment">// Remappings: token=contract</span>
+<span class="token keyword">import</span> <span class="token string">"token/token.sol"</span><span class="token punctuation">;</span> <span class="token comment">// -/home/user/work/contract/token.sol</span></code></pre>
+<h4 id="relative-imports-can-be-remapped-into-absolute-imports">Relative imports can be remapped into absolute imports</h4>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token comment">// Remappings: token=/usr/lib</span>
+<span class="token keyword">import</span> <span class="token string">"token/token.sol"</span><span class="token punctuation">;</span> <span class="token comment">// -/usr/lib/token.sol</span></code></pre>
+<h4 id="absolute-imports-can-be-remapped-into-imports-relative-to-the-current-working-directory">Absolute imports can be remapped into imports relative to the current working directory</h4>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token comment">// Remappings: /usr/lib=contract</span>
+<span class="token keyword">import</span> <span class="token string">"/usr/lib/token.sol"</span><span class="token punctuation">;</span> <span class="token comment">// -/home/user/work/contract/token.sol</span></code></pre>
+<h4 id="absolute-imports-can-be-remapped-into-imports-starting-with-or-but-they-are-also-relative-to-the-current-working-directory">Absolute imports can be remapped into imports starting with <code>.</code> or <code>..</code> but they are also relative to the current working directory</h4>
+<p>Normally imports starting with <code>.</code> or <code>..</code> are relative to the source directory.</p>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token comment">// Remappings: /usr/lib=./contract</span>
+<span class="token keyword">import</span> <span class="token string">"/usr/lib/token.sol"</span><span class="token punctuation">;</span> <span class="token comment">// -/home/user/work/contract/token.sol</span></code></pre>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token comment">// Remappings: /usr/lib=../contract</span>
+<span class="token keyword">import</span> <span class="token string">"/usr/lib/token.sol"</span><span class="token punctuation">;</span> <span class="token comment">// -/home/user/contract/token.sol</span></code></pre>
+<h4 id="only-prefix-can-be-remapped">Only prefix can be remapped</h4>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token comment">// Remappings: /usr=/tmp /lib=/bin contracts=token token.sol=contract.sol</span>
+<span class="token keyword">import</span> <span class="token string">"/usr/usr/lib/token.sol"</span><span class="token punctuation">;</span>                <span class="token comment">// -/tmp/usr/lib/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"contracts/contracts/usr/lib/token.sol"</span><span class="token punctuation">;</span> <span class="token comment">// -/home/user/work/token/contracts/usr/lib/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"token.sol"</span><span class="token punctuation">;</span>                             <span class="token comment">// -/home/user/work/contract.sol</span></code></pre>
+<h4 id="the-remapping-with-the-longest-matching-prefix-is-used">The remapping with the longest matching prefix is used</h4>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token comment">// Remappings: /usr=/project/dex /usr/lib=/project/token contracts=tokens contracts/token.sol=dex.sol</span>
+<span class="token keyword">import</span> <span class="token string">"/usr/lib/contracts/token.sol"</span><span class="token punctuation">;</span> <span class="token comment">// -/project/token/contracts/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"contracts/token.sol"</span><span class="token punctuation">;</span>          <span class="token comment">// -/home/user/work/dex.sol</span></code></pre>
+<h4 id="remapping-is-not-recursive">Remapping is not recursive</h4>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token comment">// Remappings: /a=/b /b=/c /c=/a</span>
+<span class="token keyword">import</span> <span class="token string">"/a/token.sol"</span><span class="token punctuation">;</span> <span class="token comment">// -/b/token.sol</span></code></pre>
+<h4 id="the-last-remapping-takes-precedence">The last remapping takes precedence</h4>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token comment">// Remappings: /a=/b /a=/c /a=/d</span>
+<span class="token keyword">import</span> <span class="token string">"/a/token.sol"</span><span class="token punctuation">;</span> <span class="token comment">// -/d/token.sol</span></code></pre>
+<h4 id="remappings-do-not-have-to-match-whole-path-segments">Remappings do not have to match whole path segments</h4>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token comment">// Remappings: /c=/k c=k</span>
+<span class="token keyword">import</span> <span class="token string">"/contracts/contract.sol"</span><span class="token punctuation">;</span> <span class="token comment">// -/kontracts/contract.sol</span>
+<span class="token keyword">import</span> <span class="token string">"contracts/contract.sol"</span><span class="token punctuation">;</span>  <span class="token comment">// -/home/user/work/kontracts/contract.sol</span></code></pre>
+<h4 id="leading-and-in-imports-cannot-be-remapped">Leading <code>.</code> and <code>..</code> in imports cannot be remapped</h4>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token comment">// Remappings: .=/tmp</span>
+<span class="token keyword">import</span> <span class="token string">"./token/token.sol"</span><span class="token punctuation">;</span>   <span class="token comment">// -/project/token/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"../token/token.sol"</span><span class="token punctuation">;</span>  <span class="token comment">// -/project/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">".../token/token.sol"</span><span class="token punctuation">;</span> <span class="token comment">// -/tmp../token/token.sol</span></code></pre>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token comment">// Remappings: ./token=contract ../token=contract .../token=contract</span>
+<span class="token keyword">import</span> <span class="token string">"./token/token.sol"</span><span class="token punctuation">;</span>   <span class="token comment">// -/project/token/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"../token/token.sol"</span><span class="token punctuation">;</span>  <span class="token comment">// -/project/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">".../token/token.sol"</span><span class="token punctuation">;</span> <span class="token comment">// -/home/user/work/contract/token.sol</span></code></pre>
+<h4 id="parts-of-the-path-that-and-get-resolved-into-can-get-remapped">Parts of the path that <code>.</code> and <code>..</code> get resolved into can get remapped</h4>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token comment">// Remappings: /project=/tmp /token=/tmp /project/token.sol=/tmp/dex.sol</span>
+<span class="token keyword">import</span> <span class="token string">"./token/token.sol"</span><span class="token punctuation">;</span>   <span class="token comment">// -/tmp/token/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"../token/token.sol"</span><span class="token punctuation">;</span>  <span class="token comment">// -/tmp/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"./token.sol"</span><span class="token punctuation">;</span>         <span class="token comment">// -/tmp/dex.sol</span></code></pre>
+<h4 id="remapping-of-and-works-differently-when-the-path-to-the-source-file-given-to-the-compiler-is-relative">Remapping of <code>.</code> and <code>..</code> works differently when the path to the source file given to the compiler is relative</h4>
+<p>This is one of the cases where the path to the <strong>file containing imports</strong> (specified on the compiler's command line) affects how the imports are resolved.</p>
+<p>The effect is different depending on the locations of the source directory and the current working directory relative to each other.</p>
+<h5 id="example-current-working-directory-is-a-prefix-of-the-source-directory">Example: Current working directory is a prefix of the source directory</h5>
+<ul>
+<li>Source file passed to the compiler: <code>../contract.sol</code>.</li>
+<li>Working directory: <code>/project/subdir/</code>.</li>
+</ul>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token comment">// Remappings: ./token=contract ../token=contract</span>
+<span class="token keyword">import</span> <span class="token string">"./token/token.sol"</span><span class="token punctuation">;</span>   <span class="token comment">// -/home/user/work/contract/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"../token/token.sol"</span><span class="token punctuation">;</span>  <span class="token comment">// -/home/user/work/token.sol</span></code></pre>
+<h4 id="paths-are-not-canonicalized-before-remapping">Paths are not canonicalized before remapping</h4>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token comment">// Remappings: /tmp/code=/usr/lib token=contract</span>
+<span class="token keyword">import</span> <span class="token string">"/tmp/../tmp/code/token.sol"</span><span class="token punctuation">;</span> <span class="token comment">// -/tmp/code/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"code/../token/token.sol"</span><span class="token punctuation">;</span>    <span class="token comment">// -/home/user/work/token/token.sol</span></code></pre>
+<h4 id="remappings-ignore-any-number-of-leading-and-segments-in-imports-going-beyond-the-root-directory">Remappings ignore any number of leading <code>.</code> and <code>..</code> segments in imports going beyond the root directory</h4>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token comment">// Remappings: token=contract</span>
+<span class="token keyword">import</span> <span class="token string">"token/token.sol"</span><span class="token punctuation">;</span>                  <span class="token comment">// -/home/user/work/contract/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"../token/token.sol"</span><span class="token punctuation">;</span>               <span class="token comment">// -/home/user/token/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"../../token/token.sol"</span><span class="token punctuation">;</span>            <span class="token comment">// -/home/token/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"../../../token/token.sol"</span><span class="token punctuation">;</span>         <span class="token comment">// -/token/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"../../../../token/token.sol"</span><span class="token punctuation">;</span>      <span class="token comment">// -/home/user/work/contract/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"../../../../../token/token.sol"</span><span class="token punctuation">;</span>   <span class="token comment">// -/home/user/work/contract/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"../../.././../../token/token.sol"</span><span class="token punctuation">;</span> <span class="token comment">// -/home/user/work/contract/token.sol</span></code></pre>
+<h4 id="remappings-ignore-any-number-of-leading-and-segments-when-the-path-to-the-source-file-given-to-the-compiler-is-relative">Remappings ignore any number of leading <code>.</code> and <code>..</code> segments when the path to the source file given to the compiler is relative</h4>
+<p>The effect is different depending on the locations of the source directory and the current working directory relative to each other.</p>
+<h5 id="example-current-working-directory-is-a-prefix-of-the-source-directory-2">Example: Current working directory is a prefix of the source directory</h5>
+<ul>
+<li>Source file passed to the compiler: <code>../contract.sol</code>.</li>
+<li>Working directory: <code>/project/subdir/</code>.</li>
+</ul>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token comment">// Remappings: token=contract</span>
+<span class="token keyword">import</span> <span class="token string">"token/token.sol"</span><span class="token punctuation">;</span>                  <span class="token comment">// -/home/user/work/contract/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"../token/token.sol"</span><span class="token punctuation">;</span>               <span class="token comment">// -/home/user/work/contract/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"../../token/token.sol"</span><span class="token punctuation">;</span>            <span class="token comment">// -/home/user/work/contract/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"../../../token/token.sol"</span><span class="token punctuation">;</span>         <span class="token comment">// -/home/user/work/contract/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"../../../../token/token.sol"</span><span class="token punctuation">;</span>      <span class="token comment">// -/home/user/work/contract/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"../../../../../token/token.sol"</span><span class="token punctuation">;</span>   <span class="token comment">// -/home/user/work/contract/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"../../.././../../token/token.sol"</span><span class="token punctuation">;</span> <span class="token comment">// -/home/user/work/contract/token.sol</span></code></pre>
+<h4 id="current-working-directory-path-cannot-be-remapped">Current working directory path cannot be remapped</h4>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token comment">// Remappings: /home/user/work=/workdir</span>
+<span class="token keyword">import</span> <span class="token string">"token/token.sol"</span><span class="token punctuation">;</span> <span class="token comment">// -/home/user/work/token/token.sol</span></code></pre>
+<h4 id="source-directory-path-can-be-remapped">Source directory path can be remapped</h4>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token comment">// Remappings: /project=/tmp</span>
+<span class="token keyword">import</span> <span class="token string">"./token/token.sol"</span><span class="token punctuation">;</span>          <span class="token comment">// -/tmp/token/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"../project/token/token.sol"</span><span class="token punctuation">;</span> <span class="token comment">// -/tmp/token/token.sol</span></code></pre>
+<h3 id="base-path-2">Base Path</h3>
+<h4 id="base-path-does-not-affect-absolute-imports">Base path does not affect absolute imports</h4>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token comment">// Base path: /base</span>
+<span class="token keyword">import</span> <span class="token string">"/tmp/code/token.sol"</span><span class="token punctuation">;</span>         <span class="token comment">// -/tmp/code/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"/tmp/code/../code/token.sol"</span><span class="token punctuation">;</span> <span class="token comment">// -/tmp/code/token.sol</span></code></pre>
+<h4 id="base-path-replaces-current-working-directory-in-relative-imports">Base path replaces current working directory in relative imports</h4>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token comment">// Base path: /base</span>
+<span class="token keyword">import</span> <span class="token string">"token/token.sol"</span><span class="token punctuation">;</span> <span class="token comment">// -/base/token/token.sol</span></code></pre>
+<h4 id="base-path-is-prepended-to-source-directory-path-in-imports-starting-with-or">Base path is prepended to source directory path in imports starting with <code>.</code> or <code>..</code></h4>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token comment">// Base path: /base</span>
+<span class="token keyword">import</span> <span class="token string">"./token/token.sol"</span><span class="token punctuation">;</span>  <span class="token comment">// -/base/project/token/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"../token/token.sol"</span><span class="token punctuation">;</span> <span class="token comment">// -/base/token/token.sol</span></code></pre>
+<h4 id="relative-imports-going-beyond-root-directory-ignore-and-are-relative-to-the-base-directory">Relative imports going beyond root directory ignore <code>..</code> and are relative to the base directory</h4>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token comment">// Base path: /base</span>
+<span class="token keyword">import</span> <span class="token string">"token/token.sol"</span><span class="token punctuation">;</span>                  <span class="token comment">// -/base/token/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"../token/token.sol"</span><span class="token punctuation">;</span>               <span class="token comment">// -/base/token/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"../../token/token.sol"</span><span class="token punctuation">;</span>            <span class="token comment">// -/base/token/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"../../../token/token.sol"</span><span class="token punctuation">;</span>         <span class="token comment">// -/base/token/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"../../../../token/token.sol"</span><span class="token punctuation">;</span>      <span class="token comment">// -/base/token/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"../../../../../token/token.sol"</span><span class="token punctuation">;</span>   <span class="token comment">// -/base/token/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"../../.././../../token/token.sol"</span><span class="token punctuation">;</span> <span class="token comment">// -/base/token/token.sol</span></code></pre>
+<h4 id="base-path-is-prepended-to-remapped-absolute-imports">Base path is prepended to remapped absolute imports</h4>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token comment">// Base path: /base</span>
+<span class="token comment">// Remappings: /tmp/code=/usr/lib</span>
+<span class="token keyword">import</span> <span class="token string">"/tmp/code/token.sol"</span><span class="token punctuation">;</span> <span class="token comment">// -/base/usr/lib/token.sol</span></code></pre>
+<h4 id="base-path-replaces-current-working-directory-in-remapped-relative-imports">Base path replaces current working directory in remapped relative imports</h4>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token comment">// Base path: /base</span>
+<span class="token comment">// Remappings: token=contract</span>
+<span class="token keyword">import</span> <span class="token string">"token/token.sol"</span><span class="token punctuation">;</span> <span class="token comment">// -/base/contract/token.sol</span></code></pre>
+<h4 id="base-path-is-prepended-to-relative-imports-remapped-into-absolute-imports">Base path is prepended to relative imports remapped into absolute imports</h4>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token comment">// Base path: /base</span>
+<span class="token comment">// Remappings: token=/usr/lib</span>
+<span class="token keyword">import</span> <span class="token string">"token/token.sol"</span><span class="token punctuation">;</span> <span class="token comment">// -/base/usr/lib/token.sol</span></code></pre>
+<h4 id="base-path-replaces-current-working-directory-in-absolute-imports-remapped-to-relative-imports">Base path replaces current working directory in absolute imports remapped to relative imports</h4>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token comment">// Base path: /base</span>
+<span class="token comment">// Remappings: /usr/lib=contract</span>
+<span class="token keyword">import</span> <span class="token string">"/usr/lib/token.sol"</span><span class="token punctuation">;</span> <span class="token comment">// -/base/contract/token.sol</span></code></pre>
+<h4 id="base-path-replaces-source-directory-in-absolute-imports-remapped-to-relative-imports-starting-with-or">Base path replaces source directory in absolute imports remapped to relative imports starting with <code>.</code> or <code>..</code></h4>
+<p>Without remapping such imports are relative to the source directory, not the current working directory.</p>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token comment">// Base path: /base</span>
+<span class="token comment">// Remappings: /usr/lib=./contract</span>
+<span class="token keyword">import</span> <span class="token string">"/usr/lib/token.sol"</span><span class="token punctuation">;</span> <span class="token comment">// -/base/contract/token.sol</span></code></pre>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token comment">// Base path: /base</span>
+<span class="token comment">// Remappings: /usr/lib=../contract</span>
+<span class="token keyword">import</span> <span class="token string">"/usr/lib/token.sol"</span><span class="token punctuation">;</span> <span class="token comment">// -/contract/token.sol</span></code></pre>
+<h4 id="parts-of-the-path-that-and-get-resolved-into-can-get-remapped-when-base-path-is-used-and-such-remappings-dont-override-the-base-path">Parts of the path that <code>.</code> and <code>..</code> get resolved into can get remapped when base path is used and such remappings don't override the base path</h4>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token comment">// Base path: /base</span>
+<span class="token comment">// Remappings: /project=/tmp /token=/tmp /project/token.sol=/tmp/dex.sol</span>
+<span class="token keyword">import</span> <span class="token string">"./token/token.sol"</span><span class="token punctuation">;</span>   <span class="token comment">// -/base/tmp/token/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"../token/token.sol"</span><span class="token punctuation">;</span>  <span class="token comment">// -/base/tmp/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"./token.sol"</span><span class="token punctuation">;</span>         <span class="token comment">// -/base/tmp/dex.sol</span></code></pre>
+<h4 id="base-path-cannot-be-remapped">Base path cannot be remapped</h4>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token comment">// Base path: /base</span>
+<span class="token comment">// Remappings: /base=/tmp</span>
+<span class="token keyword">import</span> <span class="token string">"token/token.sol"</span><span class="token punctuation">;</span> <span class="token comment">// -/base/token/token.sol</span></code></pre>
+<h4 id="source-directory-path-can-be-remapped-even-when-base-path-is-used">Source directory path can be remapped even when base path is used</h4>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token comment">// Base path: /base</span>
+<span class="token comment">// Remappings: /project=/tmp /base=/usr/lib</span>
+<span class="token keyword">import</span> <span class="token string">"./token/token.sol"</span><span class="token punctuation">;</span>          <span class="token comment">// -/base/tmp/token/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"../project/token/token.sol"</span><span class="token punctuation">;</span> <span class="token comment">// -/base/tmp/token/token.sol</span></code></pre>
+<h4 id="relative-base-path-is-relative-to-the-current-working-directory">Relative base path is relative to the current working directory</h4>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token comment">// Base path: base</span>
+<span class="token keyword">import</span> <span class="token string">"token/token.sol"</span><span class="token punctuation">;</span>    <span class="token comment">// -/home/user/work/base/token/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"./token/token.sol"</span><span class="token punctuation">;</span>  <span class="token comment">// -/home/user/work/base/project/token/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"../token/token.sol"</span><span class="token punctuation">;</span> <span class="token comment">// -/home/user/work/base/token/token.sol</span></code></pre>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token comment">// Base path: .</span>
+<span class="token keyword">import</span> <span class="token string">"token/token.sol"</span><span class="token punctuation">;</span>    <span class="token comment">// -/home/user/work/token/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"./token/token.sol"</span><span class="token punctuation">;</span>  <span class="token comment">// -/home/user/work/project/token/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"../token/token.sol"</span><span class="token punctuation">;</span> <span class="token comment">// -/home/user/work/token/token.sol</span></code></pre>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token comment">// Base path: ..</span>
+<span class="token keyword">import</span> <span class="token string">"token/token.sol"</span><span class="token punctuation">;</span>    <span class="token comment">// -/home/user/token/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"./token/token.sol"</span><span class="token punctuation">;</span>  <span class="token comment">// -/home/user/project/token/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"../token/token.sol"</span><span class="token punctuation">;</span> <span class="token comment">// -/home/user/token/token.sol</span></code></pre>
+<h3 id="standard-input-2">Standard input</h3>
+<h4 id="standard-input-can-be-used-as-if-it-was-an-actual-file-called-stdin-if-requested">Standard input can be used as if it was an actual file called <code>&lt;stdin&gt;</code> if requested</h4>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token comment">// Command line: contains `-`</span>
+<span class="token keyword">import</span> <span class="token string">"&lt;stdin>"</span><span class="token punctuation">;</span> <span class="token comment">// -stdin</span></code></pre>
+<p>If there is an actual file called in the current directory, it's ignored.</p>
+<h4 id="a-file-called-stdin-from-current-working-directory-can-only-be-imported-if-use-of-the-standard-input-is-not-requested">A file called <code>&lt;stdin&gt;</code> from current working directory can only be imported if use of the standard input is not requested.</h4>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token comment">// Command line: does not contain `-`</span>
+<span class="token keyword">import</span> <span class="token string">"&lt;stdin>"</span><span class="token punctuation">;</span> <span class="token comment">// -/home/user/work/&lt;stdin></span></code></pre>
+<h4 id="stdin-can-be-remapped-to-a-path-when-it-represents-standard-input"><code>&lt;stdin&gt;</code> can be remapped to a path when it represents standard input</h4>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token comment">// Command line: contains `-`</span>
+<span class="token comment">// Remappings: &lt;stdin>=/tmp/code/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"&lt;stdin>"</span><span class="token punctuation">;</span> <span class="token comment">// -/tmp/code/token.sol</span></code></pre>
+<h4 id="stdin-can-be-remapped-to-a-path-when-it-represents-a-file"><code>&lt;stdin&gt;</code> can be remapped to a path when it represents a file</h4>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token comment">// Command line: does not contain `-`</span>
+<span class="token comment">// Remappings: &lt;stdin>=/tmp/code/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"&lt;stdin>"</span><span class="token punctuation">;</span> <span class="token comment">// -/tmp/code/token.sol</span></code></pre>
+<h4 id="paths-can-be-remapped-to-stdin-when-it-represents-standard-input">Paths can be remapped to <code>&lt;stdin&gt;</code> when it represents standard input</h4>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token comment">// Command line: contains `-`</span>
+<span class="token comment">// Remappings: /tmp/code/token.sol=&lt;stdin></span>
+<span class="token keyword">import</span> <span class="token string">"/tmp/code/token.sol"</span><span class="token punctuation">;</span> <span class="token comment">// -stdin</span></code></pre>
+<h4 id="paths-can-be-remapped-to-stdin-when-it-represents-a-file">Paths can be remapped to <code>&lt;stdin&gt;</code> when it represents a file</h4>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token comment">// Command line: does not contain `-`</span>
+<span class="token comment">// Remappings: /tmp/code/token.sol=&lt;stdin></span>
+<span class="token keyword">import</span> <span class="token string">"/tmp/code/token.sol"</span><span class="token punctuation">;</span> <span class="token comment">// -/home/user/work/&lt;stdin></span></code></pre>
+<h4 id="base-path-does-not-affect-stdin-when-it-represents-standard-input">Base path does not affect <code>&lt;stdin&gt;</code> when it represents standard input</h4>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token comment">// Command line: contains `-`</span>
+<span class="token comment">// Base path: /base</span>
+<span class="token keyword">import</span> <span class="token string">"&lt;stdin>"</span><span class="token punctuation">;</span> <span class="token comment">// -stdin</span></code></pre>
+<h4 id="base-path-affects-stdin-when-it-does-not-represent-standard-input">Base path affects <code>&lt;stdin&gt;</code> when it does not represent standard input</h4>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token comment">// Command line: does not contain `-`</span>
+<span class="token comment">// Base path: /base</span>
+<span class="token keyword">import</span> <span class="token string">"&lt;stdin>"</span><span class="token punctuation">;</span> <span class="token comment">// -/base/&lt;stdin></span></code></pre>
+<h3 id="extra-slashes">Extra Slashes</h3>
+<h4 id="multiple-slashes-between-path-segments-in-imports-are-squashed-into-one">Multiple slashes between path segments in imports are squashed into one</h4>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token keyword">import</span> <span class="token string">"/tmp//code/token.sol"</span><span class="token punctuation">;</span>   <span class="token comment">// -/tmp/code/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"/tmp////code/token.sol"</span><span class="token punctuation">;</span> <span class="token comment">// -/tmp/code/token.sol</span></code></pre>
+<h4 id="trailing-slashes-in-imports-are-replaced-with">Trailing slashes in imports are replaced with <code>/.</code></h4>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token keyword">import</span> <span class="token string">"/tmp/code/token.sol/"</span><span class="token punctuation">;</span>    <span class="token comment">// -/tmp/code/token.sol/.</span>
+<span class="token keyword">import</span> <span class="token string">"/tmp/code/token.sol//"</span><span class="token punctuation">;</span>   <span class="token comment">// -/tmp/code/token.sol/.</span>
+<span class="token keyword">import</span> <span class="token string">"/tmp/code/token.sol////"</span><span class="token punctuation">;</span> <span class="token comment">// -/tmp/code/token.sol/.</span></code></pre>
+<h4 id="trailing-slashes-in-relative-imports-that-start-with-or-imports-are-stripped">Trailing slashes in relative imports that start with <code>.</code> or <code>..</code> imports are stripped</h4>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token keyword">import</span> <span class="token string">"./token/token.sol/"</span><span class="token punctuation">;</span>     <span class="token comment">// -/project/token/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"./token/token.sol//"</span><span class="token punctuation">;</span>    <span class="token comment">// -/project/token/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"./token/token.sol////"</span><span class="token punctuation">;</span>  <span class="token comment">// -/project/token/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"../token/token.sol/"</span><span class="token punctuation">;</span>    <span class="token comment">// -/project/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"../token/token.sol//"</span><span class="token punctuation">;</span>   <span class="token comment">// -/project/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"../token/token.sol////"</span><span class="token punctuation">;</span> <span class="token comment">// -/project/token.sol</span></code></pre>
+<h4 id="two-leading-slashes-in-imports-are-preserved">Two Leading slashes in imports are preserved</h4>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token keyword">import</span> <span class="token string">"//tmp/code/token.sol"</span><span class="token punctuation">;</span>    <span class="token comment">// -//tmp/code/token.sol</span></code></pre>
+<h4 id="more-than-two-leading-slashes-in-imports-are-squashed-into-one">More than two Leading slashes in imports are squashed into one</h4>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token keyword">import</span> <span class="token string">"///tmp/code/token.sol"</span><span class="token punctuation">;</span>    <span class="token comment">// -/tmp/code/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"////tmp/code/token.sol"</span><span class="token punctuation">;</span>   <span class="token comment">// -/tmp/code/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"/////tmp/code/token.sol"</span><span class="token punctuation">;</span>  <span class="token comment">// -/tmp/code/token.sol</span></code></pre>
+<h4 id="slashes-after-the-leading-or-in-relative-imports-are-squashed-into-one">Slashes after the leading <code>.</code> or <code>..</code> in relative imports are squashed into one</h4>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token keyword">import</span> <span class="token string">"./token/token.sol"</span><span class="token punctuation">;</span>      <span class="token comment">// -/project/token/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">".//token/token.sol"</span><span class="token punctuation">;</span>     <span class="token comment">// -/project/token/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">".///token/token.sol"</span><span class="token punctuation">;</span>    <span class="token comment">// -/project/token/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">".////token/token.sol"</span><span class="token punctuation">;</span>   <span class="token comment">// -/project/token/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"..//token/token.sol"</span><span class="token punctuation">;</span>    <span class="token comment">// -/token/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"..///token/token.sol"</span><span class="token punctuation">;</span>   <span class="token comment">// -/token/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"..////token/token.sol"</span><span class="token punctuation">;</span>  <span class="token comment">// -/token/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"../////token/token.sol"</span><span class="token punctuation">;</span> <span class="token comment">// -/token/token.sol</span></code></pre>
+<h4 id="slashes-in-base-path-follow-the-same-rules-as-slashes-in-imports">Slashes in base path follow the same rules as slashes in imports</h4>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token comment">// Base path: ////base1////base2/////base3////</span>
+<span class="token keyword">import</span> <span class="token string">"token/token.sol"</span><span class="token punctuation">;</span> <span class="token comment">// -/base1/base2/base3/token/token.sol</span></code></pre>
+<h4 id="slashes-in-remappings-must-match-exactly">Slashes in remappings must match exactly</h4>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token comment">// Remappings: /tmp/code=/usr/lib</span>
+<span class="token keyword">import</span> <span class="token string">"/tmp//code/token.sol"</span><span class="token punctuation">;</span>    <span class="token comment">// -/tmp/code/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"/tmp/code/token.sol/"</span><span class="token punctuation">;</span>    <span class="token comment">// -/usr/lib/token.sol/</span>
+<span class="token keyword">import</span> <span class="token string">"/tmp/code/token.sol//"</span><span class="token punctuation">;</span>   <span class="token comment">// -/usr/lib/token.sol/</span>
+<span class="token keyword">import</span> <span class="token string">"//tmp/code/token.sol"</span><span class="token punctuation">;</span>    <span class="token comment">// -//tmp/code/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"///tmp/code/token.sol"</span><span class="token punctuation">;</span>   <span class="token comment">// -/tmp/code/token.sol</span></code></pre>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token comment">// Remappings: /tmp/code/token.sol//=/usr/lib/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"/tmp/code/token.sol"</span><span class="token punctuation">;</span>    <span class="token comment">// -/usr/lib/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"/tmp/code/token.sol/"</span><span class="token punctuation">;</span>   <span class="token comment">// -/usr/lib/token.sol/.</span>
+<span class="token keyword">import</span> <span class="token string">"/tmp/code/token.sol//"</span><span class="token punctuation">;</span>  <span class="token comment">// -/usr/lib/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"/tmp/code/token.sol///"</span><span class="token punctuation">;</span> <span class="token comment">// -/usr/lib/token.sol/.</span></code></pre>
+<h4 id="multiple-trailing-slashes-in-remapping-targets-are-squashed-into-one">Multiple trailing slashes in remapping targets are squashed into one</h4>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token comment">// Remappings: /tmp/code=////usr////lib////</span>
+<span class="token keyword">import</span> <span class="token string">"/tmp/code/token.sol"</span><span class="token punctuation">;</span> <span class="token comment">// -/usr/lib/token.sol</span></code></pre>
+<h3 id="urls">URLs</h3>
+<h4 id="file-prefix-is-stripped-from-paths"><code>file://</code> prefix is stripped from paths</h4>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token keyword">import</span> <span class="token string">"file:///tmp/code/token.sol"</span><span class="token punctuation">;</span> <span class="token comment">// -/tmp/code/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"/tmp/code/file://token.sol"</span><span class="token punctuation">;</span> <span class="token comment">// -/tmp/code/file:/token.sol</span></code></pre>
+<h4 id="other-protocol-prefixes-are-not-stripped">Other protocol prefixes are not stripped</h4>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token keyword">import</span> <span class="token string">"http:///tmp/code/token.sol"</span><span class="token punctuation">;</span>  <span class="token comment">// -/home/user/work/http:/tmp/code/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"https:///tmp/code/token.sol"</span><span class="token punctuation">;</span> <span class="token comment">// -/home/user/work/https:/tmp/code/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"ftp:///tmp/code/token.sol"</span><span class="token punctuation">;</span>   <span class="token comment">// -/home/user/work/ftp:/tmp/code/token.sol</span></code></pre>
+<h4 id="paths-that-become-relative-after-stripping-of-file-are-always-relative-to-the-current-working-directory">Paths that become relative after stripping of <code>file://</code> are always relative to the current working directory</h4>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token keyword">import</span> <span class="token string">"file://token.sol"</span><span class="token punctuation">;</span>    <span class="token comment">// -/home/user/work/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"file://./token.sol"</span><span class="token punctuation">;</span>  <span class="token comment">// -/home/user/work/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"file://../token.sol"</span><span class="token punctuation">;</span> <span class="token comment">// -/home/user/token.sol</span></code></pre>
+<h4 id="base-path-is-prepended-to-paths-that-become-relative-after-stripping-of-file">Base path is prepended to paths that become relative after stripping of <code>file://</code></h4>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token comment">// Base path: /base</span>
+<span class="token keyword">import</span> <span class="token string">"file://token.sol"</span><span class="token punctuation">;</span>    <span class="token comment">// -/base/home/user/work/token.sol</span></code></pre>
+<h4 id="prepending-base-path-to-paths-that-start-with-or-after-stripping-of-file-makes-them-relative-to-the-source-directory">Prepending base path to paths that start with <code>.</code> or <code>..</code> after stripping of <code>file://</code> makes them relative to the source directory</h4>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token comment">// Base path: /base</span>
+<span class="token keyword">import</span> <span class="token string">"file://./token.sol"</span><span class="token punctuation">;</span>  <span class="token comment">// -/base/project/token.sol</span>
+<span class="token keyword">import</span> <span class="token string">"file://../token.sol"</span><span class="token punctuation">;</span> <span class="token comment">// -/base/token.sol</span></code></pre>
+<h4 id="file-prefix-as-a-whole-cannot-be-remapped"><code>file://</code> prefix as a whole cannot be remapped</h4>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token comment">// Remappings: file://=/usr/lib</span>
+<span class="token keyword">import</span> <span class="token string">"file:///tmp/code/token.sol"</span><span class="token punctuation">;</span> <span class="token comment">// -/tmp/code/token.sol</span></code></pre>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token comment">// Remappings: file:/=/usr/lib</span>
+<span class="token keyword">import</span> <span class="token string">"file:///tmp/code/token.sol"</span><span class="token punctuation">;</span> <span class="token comment">// -/tmp/code/token.sol</span></code></pre>
+<h4 id="fragments-of-the-file-prefix-can-be-remapped">Fragments of the <code>file://</code> prefix can be remapped</h4>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token comment">// Remappings: file=/usr/lib</span>
+<span class="token keyword">import</span> <span class="token string">"file:///tmp/code/token.sol"</span><span class="token punctuation">;</span> <span class="token comment">// -/usr/lib:/tmp/code/token.sol</span></code></pre>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token comment">// Remappings: f=/usr/lib</span>
+<span class="token keyword">import</span> <span class="token string">"file:///tmp/code/token.sol"</span><span class="token punctuation">;</span> <span class="token comment">// -/usr/libile:/tmp/code/token.sol</span></code></pre>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/blog/design_by_induction/"></a></li>
+</ul>
+
+			</heading-anchors>
+		</main>
+
+		<footer>
+			<p><em>Built with ❄️ 💊 🚬 </em></p>
+		</footer>
+
+		<!-- This page `/blog/solidity_remaappings_and_imports/` was built on 2025-03-06T13:12:56.931Z -->
+		<script type="module" src="/dist/xbxy_EL6cU.js"></script>
+	</body>
+</html>

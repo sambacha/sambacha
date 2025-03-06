@@ -1,0 +1,858 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Dear Diary</title>
+		<meta name="description" content="Engineering Polemic">
+		<link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="Dear Diary">
+		
+		<style>/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0, 0, 0, 0.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}
+/* This is an arbitrary CSS string added to the bundle */
+/* Defaults */
+:root {
+	--font-family: -apple-system, system-ui, sans-serif;
+	--font-family-monospace:
+		Consolas, Menlo, Monaco, Andale Mono WT, Andale Mono, Lucida Console, Lucida Sans Typewriter, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Courier New, Courier, monospace;
+}
+
+/* Theme colors */
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #c0c0c0;
+	--color-gray-90: #333;
+
+	--background-color: #fff;
+
+	--text-color: var(--color-gray-90);
+	--text-color-link: #082840;
+	--text-color-link-active: #5f2b48;
+	--text-color-link-visited: #17050f;
+
+	--syntax-tab-size: 2;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-gray-20: #e0e0e0;
+		--color-gray-50: #c0c0c0;
+		--color-gray-90: #dad8d8;
+
+		/* --text-color is assigned to --color-gray-_ above */
+		--text-color-link: #1493fb;
+		--text-color-link-active: #6969f7;
+		--text-color-link-visited: #a6a6f8;
+
+		--background-color: #15202b;
+	}
+}
+
+/* Global stylesheet */
+* {
+	box-sizing: border-box;
+}
+
+@view-transition {
+	navigation: auto;
+}
+
+html,
+body {
+	padding: 0;
+	margin: 0 auto;
+	font-family: var(--font-family);
+	color: var(--text-color);
+	background-color: var(--background-color);
+}
+html {
+	overflow-y: scroll;
+}
+body {
+	max-width: 40em;
+}
+
+/* https://www.a11yproject.com/posts/how-to-hide-content/ */
+.visually-hidden {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+/* Fluid images via https://www.zachleat.com/web/fluid-images/ */
+img {
+	max-width: 100%;
+}
+img[width][height] {
+	height: auto;
+}
+img[src$=".svg"] {
+	width: 100%;
+	height: auto;
+	max-width: none;
+}
+video,
+iframe {
+	width: 100%;
+	height: auto;
+}
+iframe {
+	aspect-ratio: 16 / 9;
+}
+
+p:last-child {
+	margin-bottom: 0;
+}
+p {
+	line-height: 1.5;
+}
+
+li {
+	line-height: 1.5;
+}
+
+a[href] {
+	color: var(--text-color-link);
+}
+a[href]:visited {
+	color: var(--text-color-link-visited);
+}
+a[href]:hover,
+a[href]:active {
+	color: var(--text-color-link-active);
+}
+
+main,
+footer {
+	padding: 1rem;
+}
+main :first-child {
+	margin-top: 0;
+}
+
+header {
+	border-bottom: 1px dashed var(--color-gray-20);
+}
+
+.links-nextprev {
+	display: flex;
+	justify-content: space-between;
+	gap: .5em 1em;
+	list-style: "";
+	border-top: 1px dashed var(--color-gray-20);
+	padding: 1em 0;
+}
+.links-nextprev > * {
+	flex-grow: 1;
+}
+.links-nextprev-next {
+	text-align: right;
+}
+
+table {
+	margin: 1em 0;
+}
+table td,
+table th {
+	padding-right: 1em;
+}
+
+pre,
+code {
+	font-family: var(--font-family-monospace);
+}
+pre:not([class*="language-"]) {
+	margin: .5em 0;
+	line-height: 1.375; /* 22px /16 */
+	-moz-tab-size: var(--syntax-tab-size);
+	-o-tab-size: var(--syntax-tab-size);
+	tab-size: var(--syntax-tab-size);
+	-webkit-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+	direction: ltr;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	overflow-x: auto;
+}
+code {
+	word-break: break-all;
+}
+
+/* Header */
+header {
+	display: flex;
+	gap: 1em;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1em;
+}
+.home-link {
+	flex-grow: 1;
+	font-size: 1em; /* 16px /16 */
+	font-weight: 700;
+}
+.home-link:link:not(:hover) {
+	text-decoration: none;
+}
+
+/* Nav */
+.nav {
+	display: flex;
+	gap: .5em 1em;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+.nav-item {
+	display: inline-block;
+}
+.nav-item a[href]:not(:hover) {
+	text-decoration: none;
+}
+.nav a[href][aria-current="page"] {
+	text-decoration: underline;
+}
+
+/* Posts list */
+.postlist {
+	list-style: none;
+	padding: 0;
+	padding-left: 1.5rem;
+}
+.postlist-item {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	counter-increment: start-from -1;
+	margin-bottom: 1em;
+}
+.postlist-item:before {
+	display: inline-block;
+	pointer-events: none;
+	content: "" counter(start-from, decimal-leading-zero) ". ";
+	line-height: 100%;
+	text-align: right;
+	margin-left: -1.5rem;
+}
+.postlist-date,
+.postlist-item:before {
+	font-size: 0.8125em; /* 13px /16 */
+	color: var(--color-gray-90);
+}
+.postlist-date {
+	word-spacing: -0.5px;
+}
+.postlist-link {
+	font-size: 1.1875em; /* 19px /16 */
+	font-weight: 700;
+	flex-basis: calc(100% - 1.5rem);
+	padding-left: .25em;
+	padding-right: .5em;
+	text-underline-position: from-font;
+	text-underline-offset: 0;
+	text-decoration-thickness: 1px;
+}
+.postlist-item-active .postlist-link {
+	font-weight: bold;
+}
+
+/* Tags */
+.post-tag {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-transform: capitalize;
+	font-style: italic;
+}
+.postlist-item > .post-tag {
+	align-self: center;
+}
+
+/* Tags list */
+.post-metadata {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: .5em;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.post-metadata time {
+	margin-right: 1em;
+}
+
+
+a {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+/* ***************************  %DEVELOPER DOC% *************************** */
+
+/*
+ * Wrap inline code samples otherwise they shoot of the side and
+ * can't be read at all.
+ */
+
+ code {
+	white-space: pre-wrap;
+	word-wrap: break-word;
+	padding: 2px 5px;
+}
+
+/**
+* Make code blocks display as blocks and give them the appropriate
+* font size and padding.
+*
+*/
+
+pre code {
+white-space: pre;
+word-wrap: normal;
+display: block;
+padding: 12px;
+font-size: 12px;
+}
+
+/*
+* Fix links to have dotted lines instead of normal underline only.
+*
+*/
+
+a {
+text-decoration-style: dotted;
+}
+
+a:hover {
+text-decoration-thickness: 2px;
+}
+
+/*
+* Fix link colors when the link text is inline code.
+*
+*/
+
+a code {
+	color: #2980B9;
+}
+a:hover code {
+	color: #3091d1;
+}
+a:visited code {
+	color: #9B59B6;
+}
+
+/*
+* Enforce CSS classes from highlight.js with theme
+*
+*/
+
+pre .cs, pre .c {
+	font-weight: inherit;
+	font-style: inherit;
+}
+
+/*
+* Fixes issues with non-highlighted code samples.
+*
+*/
+
+.no-highlight {
+display: block;
+padding: 0.5em;
+color: #333;
+}
+
+/*
+* Add some display code to prevent the $ from being copied
+*
+*```bash
+* <screen>
+*!    <prompt>$ <prompt>git clone https://github.com/$USR/$REPO.git
+* </screen>
+*```
+*
+*/
+
+.prompt {
+	user-select: none;
+	-moz-user-select: none;
+}
+
+/*
+* Diff Support
+* @usage
+* <link href="https://unpkg.com/prismjs@1.20.0/themes/prism-okaidia.css" rel="stylesheet">
+*
+*/
+
+.token.deleted {
+background-color: hsl(350deg 100% 88% / 47%);
+}
+.token.inserted {
+background-color: hsl(120deg 73% 75% / 35%);
+}
+
+/*
+* Make the + and - characters unselectable for copy/paste
+*
+*/
+
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+-webkit-user-select: none;
+user-select: none;
+}
+
+/*
+* Optional: full-width background color
+*
+*/
+
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+display: block;
+}
+
+
+/* *************************** %TEXT STYLING% *************************** */
+
+
+/* Paragraphs */
+p, pre {
+margin: 0 auto 1rem;
+}
+:is(p, pre):last-child {
+margin-bottom: 0;
+}
+/* Preformatted text */
+pre {
+position: relative;
+overflow: auto;
+padding: 1rem;
+border-radius: var(--bd-radius);
+background: var(--bg-muted);
+font-size: 0.9rem;
+line-height: 1.6;
+box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+pre > code {
+overflow: visible;
+padding: 0;
+border-radius: 0;
+background: transparent;
+font-size: inherit;
+}
+
+/* Quotation block */
+blockquote {
+padding: 0.5rem 1.5rem;
+border-left: 0.25rem solid var(--primary-color);
+margin: 0 0 1.5rem;
+color: var(--muted);
+background: var(--bg-light);
+border-radius: var(--bd-radius);
+box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+blockquote > cite:last-child {
+display: block;
+padding-left: 2rem;
+margin-top: 0.5rem;
+text-decoration: none;
+font-style: italic;
+}
+
+blockquote > cite:last-child::before {
+content: "— ";
+}
+
+/* *************************** %TABLE STYLING% *************************** */
+
+
+table {
+width: 100%;
+max-width: 100%;
+margin: 0 auto 1rem;
+border-collapse: collapse;
+overflow-x: auto;
+border-radius: 0.5rem;
+box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.table-responsive {
+display: block;
+width: 100%;
+overflow-x: auto;
+}
+
+caption {
+margin-top: 0.5rem;
+caption-side: bottom;
+color: var(--muted);
+font-size: 0.875rem;
+}
+
+tbody > tr:nth-child(2n) {
+background: var(--bg-muted);
+}
+
+th, td {
+padding: 0.75rem 1rem;
+border: 1px solid var(--bd-muted);
+text-align: left;
+}
+
+th {
+background: var(--bg-subtle);
+font-weight: 600;
+color: var(--primary-color);
+text-transform: uppercase;
+letter-spacing: 0.1rem;
+}
+
+td {
+color: var(--text-color);
+}
+
+table.center th, table.center td {
+text-align: center;
+}
+
+/* Hover effects for better interactivity */
+tbody tr:hover {
+background: var(--bg-hover);
+}
+
+th, td {
+transition: background-color 0.3s ease, color 0.3s ease;
+}</style>
+	</head>
+	<body>
+		<a href="#skip" class="visually-hidden">Skip to main content</a>
+
+		<header>
+			<a href="/" class="home-link">Dear Diary</a>
+			<nav>
+				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<ul class="nav">
+					<li class="nav-item"><a href="/">Home</a></li>
+					<li class="nav-item"><a href="/blog/">Archive</a></li>
+					<li class="nav-item"><a href="/about/">About</a></li>
+					<li class="nav-item"><a href="/feed/feed.xml">Feed</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<main id="skip">
+			<heading-anchors>
+				
+<h1></h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2025-03-06">06 March 2025</time></li>
+</ul>
+
+<h1 id="using-induction-to-design-algorithms-a-deep-dive">Using Induction to Design Algorithms: A Deep Dive</h1>
+<blockquote>
+<p><strong>Reference</strong>: The article discussed is &quot;Using Induction to Design Algorithms&quot; by Udi Manber. All inline citations refer back to that paper, using the markers provided (e.g. :contentReference[oaicite:0]{index=0}).</p>
+</blockquote>
+<p>Designing and teaching algorithms can be guided elegantly by <strong>mathematical induction</strong>, traditionally used just for proving correctness. In his paper, Udi Manber explores how the entire <strong>idea</strong> of induction can serve as a potent lens for <em>creating</em> algorithms, not merely verifying them. Below, we break down the primary <strong>proof techniques</strong> and <strong>algorithmic patterns</strong> he showcases, with notes on how they translate from mathematics to hands-on code.</p>
+<ol>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#techniques-by-proof-style">Techniques by Proof Style</a>
+<ol>
+<li><a href="#basic-induction">Basic Induction</a></li>
+<li><a href="#strengthening-the-hypothesis">Strengthening the Hypothesis</a></li>
+<li><a href="#strong-induction-dynamic-programming">Strong Induction (Dynamic Programming)</a></li>
+<li><a href="#maximal-counterexample">Maximal Counterexample</a></li>
+</ol>
+</li>
+<li><a href="#algorithmic-patterns">Algorithmic Patterns</a>
+<ol>
+<li><a href="#sorting-oriented">Sorting-Oriented</a></li>
+<li><a href="#searching--elimination">Searching &amp; Elimination</a></li>
+<li><a href="#dynamic-programming">Dynamic Programming</a></li>
+<li><a href="#graph-approaches">Graph Approaches</a></li>
+<li><a href="#geometry">Geometry</a></li>
+</ol>
+</li>
+<li><a href="#mermaid-diagrams--examples">Mermaid Diagrams &amp; Examples</a></li>
+<li><a href="#example-table-of-techniques-vs-problems">Example Table of Techniques vs. Problems</a></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ol>
+<h2 id="overview">Overview</h2>
+<p>Manber’s key premise is to <strong>treat the design process itself</strong> as an inductive proof. In combinatorial algorithm design, you rarely solve a large instance in one go. Instead, you pick a “simpler” subproblem (fewer elements, less structure, or partially solved states), solve that subproblem (often recursively), then grow your solution back to the full problem.</p>
+<p>This approach yields both a blueprint for correctness <em>and</em> a blueprint for the final code. While this viewpoint may seem natural in recursion, Manber’s broader theme is that <em>many</em> algorithmic techniques — from divide and conquer to dynamic programming — can be interpreted as “variations of induction” :contentReference[oaicite:1]{index=1}.</p>
+<h2 id="techniques-by-proof-style">Techniques by Proof Style</h2>
+<h3 id="basic-induction">Basic Induction</h3>
+<p><strong>Idea</strong>: Show a base case; then reduce the main problem of size (n) to a solution for (n-1).</p>
+<ul>
+<li>
+<p><strong>Polynomial Evaluation</strong><br>
+Manber illustrates Horner’s Rule by noticing that removing either the first or last coefficient allows an inductive step. Evaluating a smaller polynomial plus a “small fix” leads to the entire solution. Specifically, the decision to factor out (x) (or not) influences the overall computation cost :contentReference[oaicite:2]{index=2}.</p>
+</li>
+<li>
+<p><strong>Intervals Containment</strong><br>
+Given a list of intervals, label any interval contained within another. Sorting the intervals by left endpoints (and further by right endpoints for ties) allows a near-constant-time inductive extension. Removing the “rightmost left endpoint” (or working from smallest to largest) is effectively the inductive step. Complexity drops to (O(n \log n)), dominated by sorting :contentReference[oaicite:3]{index=3}.</p>
+</li>
+<li>
+<p><strong>Finding One-to-One Mappings</strong><br>
+When a function (f) from a finite set to itself is not injective, we remove an element guaranteed <em>not</em> to belong to the largest one-to-one subset. Specifically, look for any element that has no preimage (i.e., no incoming edge in a functional digraph); it can safely be removed. This solves the problem for the reduced set by induction :contentReference[oaicite:4]{index=4}.</p>
+</li>
+</ul>
+<h3 id="strengthening-the-hypothesis">Strengthening the Hypothesis</h3>
+<p><strong>Idea</strong>: Make the inductive assumption stronger so that you carry extra information that simplifies the extension step.</p>
+<ul>
+<li>
+<p><strong>Binary Tree Balance Factors</strong><br>
+Merely knowing all children’s balance factors is insufficient for a parent’s balance factor. You also need the <strong>heights</strong>. So, store both heights and balance factors at each node (the “stronger” problem). This makes it trivial to compute the parent’s balance factor once the children’s data are known :contentReference[oaicite:5]{index=5}.</p>
+</li>
+<li>
+<p><strong>Closest Pair of Points</strong><br>
+A naive divide-and-conquer can lead to (O(n \log^2 n)) time if you re-sort subproblems repeatedly. Instead, at every division step, <em>also</em> return the points sorted by (y)-coordinate as part of the inductive “solution.” Then merging sorted lists takes only (O(n)). This trick cuts total time to (O(n \log n)) :contentReference[oaicite:6]{index=6}.</p>
+</li>
+</ul>
+<h3 id="strong-induction-dynamic-programming">Strong Induction (Dynamic Programming)</h3>
+<p><strong>Idea</strong>: Keep solutions for <em>all</em> subproblems up to size (n) (or up to capacity (K), etc.). Then any new subproblem can be solved by combining or looking up smaller results.</p>
+<ul>
+<li><strong>Knapsack Problem</strong><br>
+A naive method checks whether (P(n, K)) can be reduced to (P(n-1, K)) or (P(n-1, K - k_n)), but that might spawn exponential recursion. Strong induction plus a 2D table storing results for <em>all</em> ((i, j)) with (i \le n) and (j \le K) yields an (O(nK)) approach. This is exactly dynamic programming: each solution is built from previously filled entries :contentReference[oaicite:7]{index=7}.</li>
+</ul>
+<h3 id="maximal-counterexample">Maximal Counterexample</h3>
+<p><strong>Idea</strong>: Assume the statement is false and consider the “largest” failing example. Then show it leads to an even larger one, a contradiction.</p>
+<ul>
+<li><strong>Perfect Matching in Dense Graphs</strong><br>
+In a graph of (2n) vertices, each with degree (\ge n), a perfect matching must exist. If we assume no perfect matching, we start with a <em>maximal</em> (not maximum) matching and systematically enlarge it by a clever swap of edges. This contradiction-based argument can be turned into an algorithm: build a maximal matching quickly, then keep augmenting it until it becomes perfect :contentReference[oaicite:8]{index=8}.</li>
+</ul>
+<h2 id="algorithmic-patterns">Algorithmic Patterns</h2>
+<h3 id="sorting-oriented">Sorting-Oriented</h3>
+<ul>
+<li><strong>Interval Containment</strong> uses sorting by endpoints to reduce checks to constant time per interval :contentReference[oaicite:9]{index=9}.</li>
+<li><strong>Topological Sorting</strong> (also described by Manber) conceptually “removes” an in-degree zero vertex in each inductive step. Though not a numeric sort, it’s a linearization of tasks in a partial order :contentReference[oaicite:10]{index=10}.</li>
+</ul>
+<h3 id="searching-and-elimination">Searching &amp; Elimination</h3>
+<ul>
+<li><strong>Celebrity Problem</strong>: If Alice knows Bob, discard Alice as a celebrity candidate; otherwise discard Bob. This single question per iteration reduces (n) to (n-1). After linear time, only one person might be a celebrity. Verify in (O(n)) (or even less if you track known answers). Total time is (O(n)) :contentReference[oaicite:11]{index=11}.</li>
+</ul>
+<h3 id="dynamic-programming">Dynamic Programming</h3>
+<ul>
+<li><strong>Knapsack</strong>: The classical example of storing partial solutions in a table. This exemplifies a robust strong-induction viewpoint. The method extends to many optimization problems in combinatorics and scheduling, etc. :contentReference[oaicite:12]{index=12}.</li>
+</ul>
+<h3 id="graph-approaches">Graph Approaches</h3>
+<ul>
+<li><strong>Perfect Matching</strong>: Achieved via repeated augmentation.</li>
+<li><strong>Topological Sorting</strong>: Again, remove an easy “base” vertex (indegree zero) and solve the smaller graph.</li>
+</ul>
+<h3 id="geometry">Geometry</h3>
+<ul>
+<li><strong>Closest Pair</strong>: A shining example of divide-and-conquer augmented by sorting. The geometry-specific logic about bounding boxes (“strips”) and limited neighbors per row is a hallmark of the technique :contentReference[oaicite:13]{index=13}.</li>
+</ul>
+<hr>
+<h2 id="mermaid-diagrams-and-examples">Mermaid Diagrams &amp; Examples</h2>
+<h3 id="example-celebrity-elimination">Example: <strong>Celebrity Elimination</strong></h3>
+<pre class="language-mermaid" tabindex="0"><code class="language-mermaid"><span class="token keyword">flowchart</span> TB
+    A<span class="token text string">((Start))</span> <span class="token arrow operator">--></span> Q1<span class="token text string">["Ask: Does Person A know Person B?"]</span>
+    Q1 <span class="token arrow operator">--></span><span class="token label property">|Yes|</span> discardA<span class="token text string">(Discard A from celebrity pool)</span>
+    Q1 <span class="token arrow operator">--></span><span class="token label property">|No|</span> discardB<span class="token text string">(Discard B from celebrity pool)</span>
+    discardA <span class="token arrow operator">--></span> NextRound1<span class="token text string">("Remaining n-1 People")</span>
+    discardB <span class="token arrow operator">--></span> NextRound1<span class="token text string">("Remaining n-1 People")</span>
+    NextRound1 <span class="token arrow operator">--></span> Q2<span class="token text string">["Ask Next Pair"]</span>
+    Q2 <span class="token arrow operator">--></span><span class="token label property">|Yes|</span> discardCandidate
+    Q2 <span class="token arrow operator">--></span><span class="token label property">|No|</span> discardOther
+    discardCandidate <span class="token arrow operator">--></span> NextRound2<span class="token text string">("Remaining n-2 People")</span>
+    discardOther <span class="token arrow operator">--></span> NextRound2<span class="token text string">("Remaining n-2 People")</span>
+    NextRound2 <span class="token arrow operator">--></span> Continue<span class="token text string">(... continue until 1 left)</span>
+    Continue <span class="token arrow operator">--></span> check<span class="token text string">("Verify final candidate")</span>
+    check <span class="token arrow operator">--></span> done<span class="token text string">((Done))</span></code></pre>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/blog/makerdao-documentation/">MakerDAO is a Lending Protocol not a Stablecoin</a></li><li class="links-nextprev-next">Next →<br><a href="/blog/solidity_remaappings_and_imports/"></a></li>
+</ul>
+
+			</heading-anchors>
+		</main>
+
+		<footer>
+			<p><em>Built with ❄️ 💊 🚬 </em></p>
+		</footer>
+
+		<!-- This page `/blog/design_by_induction/` was built on 2025-03-06T13:12:56.931Z -->
+		<script type="module" src="/dist/xbxy_EL6cU.js"></script>
+	</body>
+</html>

@@ -1,0 +1,1261 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>MakerDAO is a Lending Protocol not a Stablecoin</title>
+		<meta name="description" content="Engineering Polemic">
+		<link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="Dear Diary">
+		
+		<style>/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0, 0, 0, 0.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}
+/* This is an arbitrary CSS string added to the bundle */
+/* Defaults */
+:root {
+	--font-family: -apple-system, system-ui, sans-serif;
+	--font-family-monospace:
+		Consolas, Menlo, Monaco, Andale Mono WT, Andale Mono, Lucida Console, Lucida Sans Typewriter, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Courier New, Courier, monospace;
+}
+
+/* Theme colors */
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #c0c0c0;
+	--color-gray-90: #333;
+
+	--background-color: #fff;
+
+	--text-color: var(--color-gray-90);
+	--text-color-link: #082840;
+	--text-color-link-active: #5f2b48;
+	--text-color-link-visited: #17050f;
+
+	--syntax-tab-size: 2;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-gray-20: #e0e0e0;
+		--color-gray-50: #c0c0c0;
+		--color-gray-90: #dad8d8;
+
+		/* --text-color is assigned to --color-gray-_ above */
+		--text-color-link: #1493fb;
+		--text-color-link-active: #6969f7;
+		--text-color-link-visited: #a6a6f8;
+
+		--background-color: #15202b;
+	}
+}
+
+/* Global stylesheet */
+* {
+	box-sizing: border-box;
+}
+
+@view-transition {
+	navigation: auto;
+}
+
+html,
+body {
+	padding: 0;
+	margin: 0 auto;
+	font-family: var(--font-family);
+	color: var(--text-color);
+	background-color: var(--background-color);
+}
+html {
+	overflow-y: scroll;
+}
+body {
+	max-width: 40em;
+}
+
+/* https://www.a11yproject.com/posts/how-to-hide-content/ */
+.visually-hidden {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+/* Fluid images via https://www.zachleat.com/web/fluid-images/ */
+img {
+	max-width: 100%;
+}
+img[width][height] {
+	height: auto;
+}
+img[src$=".svg"] {
+	width: 100%;
+	height: auto;
+	max-width: none;
+}
+video,
+iframe {
+	width: 100%;
+	height: auto;
+}
+iframe {
+	aspect-ratio: 16 / 9;
+}
+
+p:last-child {
+	margin-bottom: 0;
+}
+p {
+	line-height: 1.5;
+}
+
+li {
+	line-height: 1.5;
+}
+
+a[href] {
+	color: var(--text-color-link);
+}
+a[href]:visited {
+	color: var(--text-color-link-visited);
+}
+a[href]:hover,
+a[href]:active {
+	color: var(--text-color-link-active);
+}
+
+main,
+footer {
+	padding: 1rem;
+}
+main :first-child {
+	margin-top: 0;
+}
+
+header {
+	border-bottom: 1px dashed var(--color-gray-20);
+}
+
+.links-nextprev {
+	display: flex;
+	justify-content: space-between;
+	gap: .5em 1em;
+	list-style: "";
+	border-top: 1px dashed var(--color-gray-20);
+	padding: 1em 0;
+}
+.links-nextprev > * {
+	flex-grow: 1;
+}
+.links-nextprev-next {
+	text-align: right;
+}
+
+table {
+	margin: 1em 0;
+}
+table td,
+table th {
+	padding-right: 1em;
+}
+
+pre,
+code {
+	font-family: var(--font-family-monospace);
+}
+pre:not([class*="language-"]) {
+	margin: .5em 0;
+	line-height: 1.375; /* 22px /16 */
+	-moz-tab-size: var(--syntax-tab-size);
+	-o-tab-size: var(--syntax-tab-size);
+	tab-size: var(--syntax-tab-size);
+	-webkit-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+	direction: ltr;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	overflow-x: auto;
+}
+code {
+	word-break: break-all;
+}
+
+/* Header */
+header {
+	display: flex;
+	gap: 1em;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1em;
+}
+.home-link {
+	flex-grow: 1;
+	font-size: 1em; /* 16px /16 */
+	font-weight: 700;
+}
+.home-link:link:not(:hover) {
+	text-decoration: none;
+}
+
+/* Nav */
+.nav {
+	display: flex;
+	gap: .5em 1em;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+.nav-item {
+	display: inline-block;
+}
+.nav-item a[href]:not(:hover) {
+	text-decoration: none;
+}
+.nav a[href][aria-current="page"] {
+	text-decoration: underline;
+}
+
+/* Posts list */
+.postlist {
+	list-style: none;
+	padding: 0;
+	padding-left: 1.5rem;
+}
+.postlist-item {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	counter-increment: start-from -1;
+	margin-bottom: 1em;
+}
+.postlist-item:before {
+	display: inline-block;
+	pointer-events: none;
+	content: "" counter(start-from, decimal-leading-zero) ". ";
+	line-height: 100%;
+	text-align: right;
+	margin-left: -1.5rem;
+}
+.postlist-date,
+.postlist-item:before {
+	font-size: 0.8125em; /* 13px /16 */
+	color: var(--color-gray-90);
+}
+.postlist-date {
+	word-spacing: -0.5px;
+}
+.postlist-link {
+	font-size: 1.1875em; /* 19px /16 */
+	font-weight: 700;
+	flex-basis: calc(100% - 1.5rem);
+	padding-left: .25em;
+	padding-right: .5em;
+	text-underline-position: from-font;
+	text-underline-offset: 0;
+	text-decoration-thickness: 1px;
+}
+.postlist-item-active .postlist-link {
+	font-weight: bold;
+}
+
+/* Tags */
+.post-tag {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-transform: capitalize;
+	font-style: italic;
+}
+.postlist-item > .post-tag {
+	align-self: center;
+}
+
+/* Tags list */
+.post-metadata {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: .5em;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.post-metadata time {
+	margin-right: 1em;
+}
+
+
+a {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+/* ***************************  %DEVELOPER DOC% *************************** */
+
+/*
+ * Wrap inline code samples otherwise they shoot of the side and
+ * can't be read at all.
+ */
+
+ code {
+	white-space: pre-wrap;
+	word-wrap: break-word;
+	padding: 2px 5px;
+}
+
+/**
+* Make code blocks display as blocks and give them the appropriate
+* font size and padding.
+*
+*/
+
+pre code {
+white-space: pre;
+word-wrap: normal;
+display: block;
+padding: 12px;
+font-size: 12px;
+}
+
+/*
+* Fix links to have dotted lines instead of normal underline only.
+*
+*/
+
+a {
+text-decoration-style: dotted;
+}
+
+a:hover {
+text-decoration-thickness: 2px;
+}
+
+/*
+* Fix link colors when the link text is inline code.
+*
+*/
+
+a code {
+	color: #2980B9;
+}
+a:hover code {
+	color: #3091d1;
+}
+a:visited code {
+	color: #9B59B6;
+}
+
+/*
+* Enforce CSS classes from highlight.js with theme
+*
+*/
+
+pre .cs, pre .c {
+	font-weight: inherit;
+	font-style: inherit;
+}
+
+/*
+* Fixes issues with non-highlighted code samples.
+*
+*/
+
+.no-highlight {
+display: block;
+padding: 0.5em;
+color: #333;
+}
+
+/*
+* Add some display code to prevent the $ from being copied
+*
+*```bash
+* <screen>
+*!    <prompt>$ <prompt>git clone https://github.com/$USR/$REPO.git
+* </screen>
+*```
+*
+*/
+
+.prompt {
+	user-select: none;
+	-moz-user-select: none;
+}
+
+/*
+* Diff Support
+* @usage
+* <link href="https://unpkg.com/prismjs@1.20.0/themes/prism-okaidia.css" rel="stylesheet">
+*
+*/
+
+.token.deleted {
+background-color: hsl(350deg 100% 88% / 47%);
+}
+.token.inserted {
+background-color: hsl(120deg 73% 75% / 35%);
+}
+
+/*
+* Make the + and - characters unselectable for copy/paste
+*
+*/
+
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+-webkit-user-select: none;
+user-select: none;
+}
+
+/*
+* Optional: full-width background color
+*
+*/
+
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+display: block;
+}
+
+
+/* *************************** %TEXT STYLING% *************************** */
+
+
+/* Paragraphs */
+p, pre {
+margin: 0 auto 1rem;
+}
+:is(p, pre):last-child {
+margin-bottom: 0;
+}
+/* Preformatted text */
+pre {
+position: relative;
+overflow: auto;
+padding: 1rem;
+border-radius: var(--bd-radius);
+background: var(--bg-muted);
+font-size: 0.9rem;
+line-height: 1.6;
+box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+pre > code {
+overflow: visible;
+padding: 0;
+border-radius: 0;
+background: transparent;
+font-size: inherit;
+}
+
+/* Quotation block */
+blockquote {
+padding: 0.5rem 1.5rem;
+border-left: 0.25rem solid var(--primary-color);
+margin: 0 0 1.5rem;
+color: var(--muted);
+background: var(--bg-light);
+border-radius: var(--bd-radius);
+box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+blockquote > cite:last-child {
+display: block;
+padding-left: 2rem;
+margin-top: 0.5rem;
+text-decoration: none;
+font-style: italic;
+}
+
+blockquote > cite:last-child::before {
+content: "— ";
+}
+
+/* *************************** %TABLE STYLING% *************************** */
+
+
+table {
+width: 100%;
+max-width: 100%;
+margin: 0 auto 1rem;
+border-collapse: collapse;
+overflow-x: auto;
+border-radius: 0.5rem;
+box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.table-responsive {
+display: block;
+width: 100%;
+overflow-x: auto;
+}
+
+caption {
+margin-top: 0.5rem;
+caption-side: bottom;
+color: var(--muted);
+font-size: 0.875rem;
+}
+
+tbody > tr:nth-child(2n) {
+background: var(--bg-muted);
+}
+
+th, td {
+padding: 0.75rem 1rem;
+border: 1px solid var(--bd-muted);
+text-align: left;
+}
+
+th {
+background: var(--bg-subtle);
+font-weight: 600;
+color: var(--primary-color);
+text-transform: uppercase;
+letter-spacing: 0.1rem;
+}
+
+td {
+color: var(--text-color);
+}
+
+table.center th, table.center td {
+text-align: center;
+}
+
+/* Hover effects for better interactivity */
+tbody tr:hover {
+background: var(--bg-hover);
+}
+
+th, td {
+transition: background-color 0.3s ease, color 0.3s ease;
+}</style>
+	</head>
+	<body>
+		<a href="#skip" class="visually-hidden">Skip to main content</a>
+
+		<header>
+			<a href="/" class="home-link">Dear Diary</a>
+			<nav>
+				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<ul class="nav">
+					<li class="nav-item"><a href="/">Home</a></li>
+					<li class="nav-item"><a href="/blog/">Archive</a></li>
+					<li class="nav-item"><a href="/about/">About</a></li>
+					<li class="nav-item"><a href="/feed/feed.xml">Feed</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<main id="skip">
+			<heading-anchors>
+				
+<h1 id="makerdao-is-a-lending-protocol-not-a-stablecoin">MakerDAO is a Lending Protocol not a Stablecoin</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2025-03-06">06 March 2025</time></li>
+	<li><a href="/tags/makerdao/" class="post-tag">MakerDAO</a>, </li>
+	<li><a href="/tags/smart-contracts/" class="post-tag">Smart Contracts</a>, </li>
+	<li><a href="/tags/solidity/" class="post-tag">Solidity</a>, </li>
+	<li><a href="/tags/defi/" class="post-tag">DeFi</a></li>
+</ul>
+
+<ul>
+<li><a href="#contract-renaming">Contract Renaming</a></li>
+<li><a href="#variable-and-naming-changes">Variable and Naming Changes</a></li>
+<li><a href="#cdp-engine-formerly-vat">CDP Engine (formerly Vat)</a>
+<ul>
+<li><a href="#risk-parameters-for-collateral-types">Risk Parameters for Collateral Types</a></li>
+<li><a href="#vault-operations">Vault Operations</a></li>
+<li><a href="#vault-safety-mechanisms">Vault Safety Mechanisms</a></li>
+</ul>
+</li>
+<li><a href="#cdp-engine-implementation">CDP Engine Implementation</a>
+<ul>
+<li><a href="#authentication">Authentication</a></li>
+<li><a href="#data-structures">Data Structures</a></li>
+<li><a href="#administration">Administration</a></li>
+<li><a href="#cdp-manipulation">CDP Manipulation</a></li>
+<li><a href="#cdp-fungibility">CDP Fungibility</a></li>
+<li><a href="#cdp-confiscation">CDP Confiscation</a></li>
+<li><a href="#settlement">Settlement</a></li>
+<li><a href="#rates">Rates</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="semantic-mapping-changes">Semantic Mapping Changes</h2>
+<p>To make dear reader's life easier, we adopt the following mappings:</p>
+<ul>
+<li><code>end.sol</code> → <code>globalSettlement.sol</code></li>
+<li><code>lib.sol</code> → <code>commonFunctions.sol</code></li>
+<li><code>join.sol</code> → <code>adapters.sol</code></li>
+<li><code>flip.sol</code> → <code>collateralAuction.sol</code></li>
+<li><code>flap.sol</code> → <code>surplusAuction.sol</code></li>
+<li><code>vat.sol</code> → <code>CDPEngine.sol</code></li>
+<li><code>cat.sol</code> → <code>liquidations.sol</code></li>
+<li><code>flop.sol</code> → <code>debtAuction.sol</code></li>
+<li><code>jug.sol</code> → <code>stabilityFees.sol</code></li>
+<li><code>spot.sol</code> → <code>oracle.sol</code></li>
+<li><code>vow.sol</code> → <code>settlement.sol</code></li>
+</ul>
+<h2 id="variable-and-naming-changes">Variable and Naming Changes</h2>
+<ul>
+<li>Some <code>uint</code> variables that used only <code>0</code> or <code>1</code> values were transformed into <code>bool</code>:
+<ul>
+<li><code>uint256 ward</code> → <code>bool authorizedAccounts</code></li>
+<li><code>uint256 live</code> → <code>bool DSRisActive</code></li>
+</ul>
+</li>
+<li>The library contract <code>Note</code> is now <code>LogEmitter</code> (expanded to include the common <code>auth</code> pattern).</li>
+<li><strong>Gems</strong> are now <strong>Tokens</strong>.
+<ul>
+<li><code>gemLike</code> (a simple token pattern) is now <code>SimpleToken</code>.</li>
+</ul>
+</li>
+<li><strong>Flip</strong> and <strong>Flap</strong> auctions both exchange <strong>Collateral Tokens</strong> for <strong>DAI</strong>, but in opposite directions.
+<ul>
+<li>More intuitive names: &quot;buy&quot; and &quot;sell&quot; auctions.</li>
+</ul>
+</li>
+</ul>
+<h2 id="cdp-engine-formerly-vat">CDP Engine (formerly Vat)</h2>
+<p>The <strong>CDP Engine</strong> is the core <strong>Vault engine</strong> of the Dai System. It stores vaults, tracks associated DAI and collateral balances, and defines immutable rules for vault management—essentially the <strong>constitution of DSS</strong>.</p>
+<blockquote>
+<p>📖 <a href="https://docs.makerdao.com/other-documentation/system-glossary#vat-vault-engine">MakerDAO System Glossary - Vat (Vault Engine)</a></p>
+</blockquote>
+<p>Users (<code>msg.sender</code>) can authorize an address (<code>usr</code>) to manipulate their collateral balances and outstanding debt within a vault.</p>
+<h3 id="risk-parameters-for-collateral-types">Risk Parameters for Collateral Types</h3>
+<h4 id="accumulatedrates"><code>accumulatedRates</code></h4>
+<ul>
+<li>Accumulated interest rate used for debt calculations.</li>
+<li>Read more in the <a href="https://github.com/makerdao/developerguides">Intro to Rate Mechanism</a>.</li>
+</ul>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token builtin">uint256</span> accumulatedRates<span class="token punctuation">;</span>  <span class="token comment">// Accumulated Rates [ray]</span></code></pre>
+<h4 id="safetyprice"><code>safetyPrice</code></h4>
+<ul>
+<li>Medianizer-reported price adjusted by the required collateralization ratio.</li>
+<li>Example: If <strong>price = $200</strong> and <strong>collateralization ratio = 120%</strong>, then <strong>safetyPrice = 166.66</strong>.</li>
+</ul>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token builtin">uint256</span> safetyPrice<span class="token punctuation">;</span>  <span class="token comment">// Price with Safety Margin [ray]</span></code></pre>
+<h4 id="debtceiling"><code>debtCeiling</code></h4>
+<ul>
+<li>Maximum DAI that can be generated per collateral type.</li>
+<li>Example: If <strong>debtCeiling = 3M</strong>, no new DAI can be minted once 3M is reached until governance updates it.</li>
+</ul>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token builtin">uint256</span> debtCeiling<span class="token punctuation">;</span>  <span class="token comment">// Debt Ceiling [rad]</span></code></pre>
+<h4 id="debtfloor"><code>debtFloor</code></h4>
+<ul>
+<li>Minimum outstanding debt per vault to ensure economic viability of liquidations.</li>
+<li>Prevents uneconomical liquidations due to gas fees.</li>
+</ul>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token builtin">uint256</span> debtFloor<span class="token punctuation">;</span>  <span class="token comment">// Vault Debt Floor [rad]</span></code></pre>
+<h4 id="debt"><code>debt</code></h4>
+<ul>
+<li><strong>Total DAI issued</strong> across all collateral types.</li>
+<li>⚠️ There are <strong>two variables</strong> named <code>debt</code>, with different meanings.</li>
+</ul>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token builtin">uint256</span> <span class="token keyword">public</span> debt<span class="token punctuation">;</span>  <span class="token comment">// Total Dai Issued [rad]</span></code></pre>
+<h3 id="vault-operations">Vault Operations</h3>
+<h4 id="slip"><code>slip</code></h4>
+<p>Restricted function allowing collateral token adapters to update user balances for adding/removing collateral.</p>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token keyword">function</span> <span class="token function">slip</span><span class="token punctuation">(</span><span class="token builtin">bytes32</span> collateralType<span class="token punctuation">,</span> <span class="token builtin">address</span> usr<span class="token punctuation">,</span> <span class="token builtin">int256</span> amount<span class="token punctuation">)</span> <span class="token keyword">external</span> emitLog onlyOwners <span class="token punctuation">{</span>
+    tokenCollateral<span class="token punctuation">[</span>collateralType<span class="token punctuation">]</span><span class="token punctuation">[</span>usr<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">add</span><span class="token punctuation">(</span>tokenCollateral<span class="token punctuation">[</span>collateralType<span class="token punctuation">]</span><span class="token punctuation">[</span>usr<span class="token punctuation">]</span><span class="token punctuation">,</span> amount<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<h4 id="frob"><code>frob</code></h4>
+<ul>
+<li>Manipulates locked collateral and outstanding debt in a vault.</li>
+<li>Changes must respect debt ceilings and ensure vault stability.</li>
+<li>Calculates <strong>normalized DAI debt</strong> using accumulated rates.</li>
+</ul>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token keyword">require</span><span class="token punctuation">(</span>collateralType<span class="token punctuation">.</span>accumulatedRates <span class="token operator">!=</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token string">"CDPEngineInstance/collateralType-not-init"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+urn<span class="token punctuation">.</span>lockedCollateral <span class="token operator">=</span> <span class="token function">add</span><span class="token punctuation">(</span>urn<span class="token punctuation">.</span>lockedCollateral<span class="token punctuation">,</span> dink<span class="token punctuation">)</span><span class="token punctuation">;</span>
+urn<span class="token punctuation">.</span>debt <span class="token operator">=</span> <span class="token function">add</span><span class="token punctuation">(</span>urn<span class="token punctuation">.</span>debt<span class="token punctuation">,</span> dart<span class="token punctuation">)</span><span class="token punctuation">;</span>
+collateralType<span class="token punctuation">.</span>debtAmount <span class="token operator">=</span> <span class="token function">add</span><span class="token punctuation">(</span>collateralType<span class="token punctuation">.</span>debtAmount<span class="token punctuation">,</span> dart<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token builtin">int</span> dtab <span class="token operator">=</span> <span class="token function">mul</span><span class="token punctuation">(</span>collateralType<span class="token punctuation">.</span>accumulatedRates<span class="token punctuation">,</span> dart<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token builtin">uint</span> tab <span class="token operator">=</span> <span class="token function">mul</span><span class="token punctuation">(</span>collateralType<span class="token punctuation">.</span>accumulatedRates<span class="token punctuation">,</span> urn<span class="token punctuation">.</span>debt<span class="token punctuation">)</span><span class="token punctuation">;</span>
+debt <span class="token operator">=</span> <span class="token function">add</span><span class="token punctuation">(</span>debt<span class="token punctuation">,</span> dtab<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<h3 id="vault-safety-mechanisms">Vault Safety Mechanisms</h3>
+<ul>
+<li><strong>Safe actions</strong> (e.g., paying down debt) can be performed by any user.</li>
+<li><strong>Unsafe actions</strong> (e.g., removing collateral) require vault ownership or authorization.</li>
+<li>Ensures:
+<ul>
+<li><code>cool</code>: Actions reduce outstanding debt.</li>
+<li><code>firm</code>: Additional collateral is locked.</li>
+<li><code>calm</code>: Debt ceilings are respected.</li>
+</ul>
+</li>
+</ul>
+<h2 id="cdp-engine-implementation">CDP Engine Implementation</h2>
+<p>The CDP Engine is the core Vault engine of Dai System. It stores Vaults and tracks all the associated Dai and Collateral balances. It also defines the rules by which Vaults and balances can be manipulated. The rules defined in the CDP Engine are immutable, so in some sense, the rules in the CDP Engine can be viewed as the constitution of dss.</p>
+<p>Learn more at: <a href="https://docs.makerdao.com/other-documentation/system-glossary#vat-vault-engine">https://docs.makerdao.com/other-documentation/system-glossary#vat-vault-engine</a></p>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token keyword">pragma</span> <span class="token keyword">solidity</span> <span class="token number">0.5</span><span class="token number">.12</span><span class="token punctuation">;</span>
+
+<span class="token keyword">contract</span> <span class="token class-name">CDPEngineInstance</span> <span class="token keyword">is</span> Permissioned <span class="token punctuation">{</span></code></pre>
+<h3 id="authentication">Authentication</h3>
+<p>The caller (<code>msg.sender</code>) can authorize an address <code>usr</code> to manipulate their collateral balances and locked collateral or outstanding debt in a Vault.</p>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token keyword">function</span> <span class="token function">addAuthorization</span><span class="token punctuation">(</span><span class="token builtin">address</span> usr<span class="token punctuation">)</span> <span class="token keyword">external</span> emitLog onlyOwners <span class="token punctuation">{</span>
+  <span class="token keyword">require</span><span class="token punctuation">(</span>NormalOperation<span class="token punctuation">,</span> <span class="token string">"CDPEngineInstance/not-NormalOperation"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  authorizedAccounts<span class="token punctuation">[</span>usr<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> <span class="token function">removeAuthorization</span><span class="token punctuation">(</span><span class="token builtin">address</span> usr<span class="token punctuation">)</span> <span class="token keyword">external</span> emitLog onlyOwners <span class="token punctuation">{</span>
+  <span class="token keyword">require</span><span class="token punctuation">(</span>NormalOperation<span class="token punctuation">,</span> <span class="token string">"CDPEngineInstance/not-NormalOperation"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  authorizedAccounts<span class="token punctuation">[</span>usr<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">mapping</span><span class="token punctuation">(</span><span class="token builtin">address</span> <span class="token operator">=></span> <span class="token keyword">mapping</span> <span class="token punctuation">(</span><span class="token builtin">address</span> <span class="token operator">=></span> <span class="token builtin">uint</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">public</span> can<span class="token punctuation">;</span>
+<span class="token keyword">function</span> <span class="token function">hope</span><span class="token punctuation">(</span><span class="token builtin">address</span> usr<span class="token punctuation">)</span> <span class="token keyword">external</span> emitLog <span class="token punctuation">{</span> can<span class="token punctuation">[</span>msg<span class="token punctuation">.</span>sender<span class="token punctuation">]</span><span class="token punctuation">[</span>usr<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+<span class="token keyword">function</span> <span class="token function">nope</span><span class="token punctuation">(</span><span class="token builtin">address</span> usr<span class="token punctuation">)</span> <span class="token keyword">external</span> emitLog <span class="token punctuation">{</span> can<span class="token punctuation">[</span>msg<span class="token punctuation">.</span>sender<span class="token punctuation">]</span><span class="token punctuation">[</span>usr<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+<span class="token keyword">function</span> <span class="token function">wish</span><span class="token punctuation">(</span><span class="token builtin">address</span> bit<span class="token punctuation">,</span> <span class="token builtin">address</span> usr<span class="token punctuation">)</span> <span class="token keyword">internal</span> <span class="token keyword">view</span> <span class="token keyword">returns</span> <span class="token punctuation">(</span><span class="token builtin">bool</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token function">either</span><span class="token punctuation">(</span>bit <span class="token operator">==</span> usr<span class="token punctuation">,</span> can<span class="token punctuation">[</span>bit<span class="token punctuation">]</span><span class="token punctuation">[</span>usr<span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<h3 id="data-structures">Data Structures</h3>
+<h4 id="collateraltype-structure">CollateralType Structure</h4>
+<p>Total <code>daiBalance</code> debt of all vaults of a collateral type</p>
+<blockquote>
+<p>[!IMPORTANT]
+Total Normalised Debt [amount]</p>
+</blockquote>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token builtin">uint256</span> debtAmount<span class="token punctuation">;</span></code></pre>
+<p>Accumulated interest used in the multiplication to calculate the total debt owed either by a vault or an entire collateral type. Please read the &quot;Intro to Rate Mechanism&quot; developer guide to learn more about how rates work in Maker smart contracts <a href="https://github.com/makerdao/developerguides">https://github.com/makerdao/developerguides</a></p>
+<blockquote>
+<p>[!IMPORTANT]
+Accumulated Rates [ray]</p>
+</blockquote>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token builtin">uint256</span> accumulatedRates<span class="token punctuation">;</span></code></pre>
+<p>Price reported by the medianizer scaled with the collateralization ratio required by a vault. Ex: Price: 200 USD, Collateralization ratio for the collateral type: 120%. Spot will have 166.66. Which means a maximum of 166.66 in debt is allowed by the system for every unit of collateral locked in a Vault.</p>
+<blockquote>
+<p>[!IMPORTANT]
+Price with Safety Margin [ray]</p>
+</blockquote>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token builtin">uint256</span> safetyPrice<span class="token punctuation">;</span></code></pre>
+<p>Debt ceiling allocated for a collateral type. Ex: 3M daiBalance. A maximum of 3M in daiBalance can be generated by all vaults of a collateral type. Once this limit is reached new daiBalance cannot be generated until governance raises it by updating this risk parameter.</p>
+<blockquote>
+<p>[!IMPORTANT]
+Debt Ceiling [rad]</p>
+</blockquote>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token builtin">uint256</span> debtCeiling<span class="token punctuation">;</span></code></pre>
+<p>Dust limits that limit the minimum amount of outstanding debt that a vault of this collateral type needs to be open. This ensures vaults with tiny amounts of collateral are not present in the system as they won't be economical for Keepers to liquidate because the gas fees incurred would be higher than the profits gained from liquidation.</p>
+<blockquote>
+<p>[!IMPORTANT]
+Vault Debt Floor [rad]</p>
+</blockquote>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token builtin">uint256</span> debtFloor<span class="token punctuation">;</span></code></pre>
+<h4 id="vault-structure">Vault Structure</h4>
+<p>Collateral locked in a vault.</p>
+<blockquote>
+<p>[!IMPORTANT]
+Locked Collateral [amount]</p>
+</blockquote>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token builtin">uint256</span> lockedCollateral<span class="token punctuation">;</span></code></pre>
+<p>Total debt of a vault is always calculated by multiplying debt with CollateralType.accumulatedRates.</p>
+<blockquote>
+<p>[!IMPORTANT]
+Normalised Debt [amount]</p>
+</blockquote>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token builtin">uint256</span> debt<span class="token punctuation">;</span></code></pre>
+<h4 id="global-mappings-and-variables">Global Mappings and Variables</h4>
+<p>Mapping to store some of the risk parameters of collateral types. Risk parameters for collateral types are also stored in other contracts too.</p>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token keyword">mapping</span> <span class="token punctuation">(</span><span class="token builtin">bytes32</span> <span class="token operator">=></span> CollateralType<span class="token punctuation">)</span> <span class="token keyword">public</span> collateralTypes<span class="token punctuation">;</span></code></pre>
+<p>Mapping to store the collateral locked and outstanding daiBalance debt of all vaults</p>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token keyword">mapping</span> <span class="token punctuation">(</span><span class="token builtin">bytes32</span> <span class="token operator">=></span> <span class="token keyword">mapping</span> <span class="token punctuation">(</span><span class="token builtin">address</span> <span class="token operator">=></span> Vault<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">public</span> vaults<span class="token punctuation">;</span></code></pre>
+<p>Collateral balance of a user within the vault database that is not locked within a vault. This balance cannot be ceased during a vault liquidation. A user needs to first get this balance to lock additional collateral within a vault.</p>
+<blockquote>
+<p>[!IMPORTANT]
+[amount]</p>
+</blockquote>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token keyword">mapping</span> <span class="token punctuation">(</span><span class="token builtin">bytes32</span> <span class="token operator">=></span> <span class="token keyword">mapping</span> <span class="token punctuation">(</span><span class="token builtin">address</span> <span class="token operator">=></span> <span class="token builtin">uint</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">public</span> tokenCollateral<span class="token punctuation">;</span></code></pre>
+<p>Dai balances of users. This will not reflect the balances of those holding Dai ERC-20 tokens issued by the adapter contract.</p>
+<blockquote>
+<p>[!IMPORTANT]
+[rad]</p>
+</blockquote>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token keyword">mapping</span> <span class="token punctuation">(</span><span class="token builtin">address</span> <span class="token operator">=></span> <span class="token builtin">uint256</span><span class="token punctuation">)</span> <span class="token keyword">public</span> daiBalance<span class="token punctuation">;</span></code></pre>
+<p>Bad debt balance of addresses. Typically only the address of the Vow contract would have a badDebt balance in the system.</p>
+<blockquote>
+<p>[!IMPORTANT]
+[rad]</p>
+</blockquote>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token keyword">mapping</span> <span class="token punctuation">(</span><span class="token builtin">address</span> <span class="token operator">=></span> <span class="token builtin">uint256</span><span class="token punctuation">)</span> <span class="token keyword">public</span> badDebt<span class="token punctuation">;</span></code></pre>
+<p>Total Dai issued across all collateral types by the system. ATTENTION: there are currently two variables with name Debt, meaning different things</p>
+<blockquote>
+<p>[!IMPORTANT]
+Total Dai Issued [rad]</p>
+</blockquote>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token builtin">uint256</span> <span class="token keyword">public</span> debt<span class="token punctuation">;</span></code></pre>
+<p>Total amount of bad debt in the system.</p>
+<blockquote>
+<p>[!IMPORTANT]
+Total Unbacked Dai [rad]</p>
+</blockquote>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token builtin">uint256</span> <span class="token keyword">public</span> totalBadDebt<span class="token punctuation">;</span></code></pre>
+<p>Total debt ceiling set for the entire system. It need not add up to all the individual debt ceilings set for each collateral type.</p>
+<blockquote>
+<p>[!IMPORTANT]
+Total Debt Ceiling [rad]</p>
+</blockquote>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token builtin">uint256</span> <span class="token keyword">public</span> totalDebtCeiling<span class="token punctuation">;</span></code></pre>
+<p>Set to false when the system is in Emergency Shutdown mode and stops users from making any changes to their existing vaults. For detailed sequence of events please refer to End.</p>
+<blockquote>
+<p>[!IMPORTANT]
+Access Flag</p>
+</blockquote>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token builtin">bool</span> <span class="token keyword">public</span> NormalOperation<span class="token punctuation">;</span></code></pre>
+<h4 id="event-logging">Event Logging</h4>
+<p>EmitLog - a general purpose log that can be added to any function from a contract.</p>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token keyword">event</span> <span class="token function">EmitLog</span><span class="token punctuation">(</span>
+    <span class="token builtin">bytes4</span>   <span class="token keyword">indexed</span>  sig<span class="token punctuation">,</span>
+    <span class="token builtin">bytes32</span>  <span class="token keyword">indexed</span>  arg1<span class="token punctuation">,</span>
+    <span class="token builtin">bytes32</span>  <span class="token keyword">indexed</span>  arg2<span class="token punctuation">,</span>
+    <span class="token builtin">bytes32</span>  <span class="token keyword">indexed</span>  arg3<span class="token punctuation">,</span>
+    <span class="token builtin">bytes</span>    data
+<span class="token punctuation">)</span> <span class="token keyword">anonymous</span><span class="token punctuation">;</span>
+
+<span class="token keyword">modifier</span> emitLog <span class="token punctuation">{</span>
+    <span class="token keyword">_</span><span class="token punctuation">;</span>
+    <span class="token keyword">assembly</span> <span class="token punctuation">{</span>
+        <span class="token comment">// log an 'anonymous' event with a constant 6 words of calldata</span>
+        <span class="token comment">// and four indexed topics: the selector and the first three args</span>
+        <span class="token keyword">let</span> mark <span class="token operator">:=</span> msize                         <span class="token comment">// end of memory ensures zero</span>
+        <span class="token function">mstore</span><span class="token punctuation">(</span><span class="token number">0x40</span><span class="token punctuation">,</span> <span class="token function">add</span><span class="token punctuation">(</span>mark<span class="token punctuation">,</span> <span class="token number">288</span><span class="token punctuation">)</span><span class="token punctuation">)</span>              <span class="token comment">// update free memory pointer</span>
+        <span class="token function">mstore</span><span class="token punctuation">(</span>mark<span class="token punctuation">,</span> <span class="token number">0x20</span><span class="token punctuation">)</span>                        <span class="token comment">// bytes type data offset</span>
+        <span class="token function">mstore</span><span class="token punctuation">(</span><span class="token function">add</span><span class="token punctuation">(</span>mark<span class="token punctuation">,</span> <span class="token number">0x20</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">224</span><span class="token punctuation">)</span>              <span class="token comment">// bytes size (padded)</span>
+        <span class="token function">calldatacopy</span><span class="token punctuation">(</span><span class="token function">add</span><span class="token punctuation">(</span>mark<span class="token punctuation">,</span> <span class="token number">0x40</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">224</span><span class="token punctuation">)</span>     <span class="token comment">// bytes payload</span>
+        <span class="token function">log4</span><span class="token punctuation">(</span>mark<span class="token punctuation">,</span> <span class="token number">288</span><span class="token punctuation">,</span>                           <span class="token comment">// calldata</span>
+             <span class="token function">shl</span><span class="token punctuation">(</span><span class="token number">224</span><span class="token punctuation">,</span> <span class="token function">shr</span><span class="token punctuation">(</span><span class="token number">224</span><span class="token punctuation">,</span> <span class="token function">calldataload</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token comment">// msg.sig</span>
+             <span class="token function">calldataload</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">,</span>                     <span class="token comment">// arg1</span>
+             <span class="token function">calldataload</span><span class="token punctuation">(</span><span class="token number">36</span><span class="token punctuation">)</span><span class="token punctuation">,</span>                    <span class="token comment">// arg2</span>
+             <span class="token function">calldataload</span><span class="token punctuation">(</span><span class="token number">68</span><span class="token punctuation">)</span>                     <span class="token comment">// arg3</span>
+            <span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<h3 id="administration">Administration</h3>
+<p>Rate for all collateral types is first initialized to 1 a fixed point integer, with 27 decimal places. It increases continuously every second based on the value of collateral-specific risk premium set for the collateral type on the Stability Fees (former jug) contract.</p>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token keyword">function</span> <span class="token function">init</span><span class="token punctuation">(</span><span class="token builtin">bytes32</span> collateralType<span class="token punctuation">)</span> <span class="token keyword">external</span> emitLog onlyOwners <span class="token punctuation">{</span>
+    <span class="token keyword">require</span><span class="token punctuation">(</span>collateralTypes<span class="token punctuation">[</span>collateralType<span class="token punctuation">]</span><span class="token punctuation">.</span>accumulatedRates <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token string">"CDPEngineInstance/collateralType-already-init"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    collateralTypes<span class="token punctuation">[</span>collateralType<span class="token punctuation">]</span><span class="token punctuation">.</span>accumulatedRates <span class="token operator">=</span> <span class="token number">10</span> <span class="token operator">**</span> <span class="token number">27</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>Setter methods for total debt ceiling, and to update safetyPrice, debtCeiling, and debtFloor for each collateral type.</p>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token keyword">function</span> <span class="token function">setSystemDebtCeiling</span><span class="token punctuation">(</span><span class="token builtin">uint</span> newDebtCeiling<span class="token punctuation">)</span> <span class="token keyword">external</span> emitLog onlyOwners <span class="token punctuation">{</span>
+    <span class="token keyword">require</span><span class="token punctuation">(</span>NormalOperation<span class="token punctuation">,</span> <span class="token string">"CDPEngineInstance/not-NormalOperation"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    totalDebtCeiling <span class="token operator">=</span> newDebtCeiling<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> <span class="token function">setSafetyPrice</span><span class="token punctuation">(</span><span class="token builtin">bytes32</span> collateralType<span class="token punctuation">,</span> <span class="token builtin">uint</span> newSafetyPrice<span class="token punctuation">)</span> <span class="token keyword">external</span> emitLog onlyOwners <span class="token punctuation">{</span>
+    <span class="token keyword">require</span><span class="token punctuation">(</span>NormalOperation<span class="token punctuation">,</span> <span class="token string">"CDPEngineInstance/not-NormalOperation"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    collateralTypes<span class="token punctuation">[</span>collateralType<span class="token punctuation">]</span><span class="token punctuation">.</span>safetyPrice <span class="token operator">=</span> newSafetyPrice<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> <span class="token function">setCollateralDebtCeiling</span><span class="token punctuation">(</span><span class="token builtin">bytes32</span> collateralType<span class="token punctuation">,</span> <span class="token builtin">uint</span> newDebtCeiling<span class="token punctuation">)</span> <span class="token keyword">external</span> emitLog onlyOwners <span class="token punctuation">{</span>
+    <span class="token keyword">require</span><span class="token punctuation">(</span>NormalOperation<span class="token punctuation">,</span> <span class="token string">"CDPEngineInstance/not-NormalOperation"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    collateralTypes<span class="token punctuation">[</span>collateralType<span class="token punctuation">]</span><span class="token punctuation">.</span>debtCeiling <span class="token operator">=</span> newDebtCeiling<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> <span class="token function">setDebtFloor</span><span class="token punctuation">(</span><span class="token builtin">bytes32</span> collateralType<span class="token punctuation">,</span> <span class="token builtin">uint</span> newDebtFloor<span class="token punctuation">)</span> <span class="token keyword">external</span> emitLog onlyOwners <span class="token punctuation">{</span>
+    <span class="token keyword">require</span><span class="token punctuation">(</span>NormalOperation<span class="token punctuation">,</span> <span class="token string">"CDPEngineInstance/not-NormalOperation"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    collateralTypes<span class="token punctuation">[</span>collateralType<span class="token punctuation">]</span><span class="token punctuation">.</span>debtFloor <span class="token operator">=</span> newDebtFloor<span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>Sets the emergency shutdown flag to true for this contract.</p>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token keyword">function</span> <span class="token function">setEmergencyShutdown</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">external</span> emitLog onlyOwners <span class="token punctuation">{</span>
+    NormalOperation <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<h3 id="fungibility">Fungibility</h3>
+<p>This is a restricted function that primarily allows collateral token adapters to update internal collateral balances of users when they add or remove collateral. wad is a signed number and lets this function both add or subtract internal collateral balances. The balances here are not locked within vaults and cannot be ceased during liquidations.</p>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token keyword">function</span> <span class="token function">slip</span><span class="token punctuation">(</span><span class="token builtin">bytes32</span> collateralType<span class="token punctuation">,</span> <span class="token builtin">address</span> usr<span class="token punctuation">,</span> <span class="token builtin">int256</span> amount<span class="token punctuation">)</span> <span class="token keyword">external</span> emitLog onlyOwners <span class="token punctuation">{</span>
+    tokenCollateral<span class="token punctuation">[</span>collateralType<span class="token punctuation">]</span><span class="token punctuation">[</span>usr<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">add</span><span class="token punctuation">(</span>tokenCollateral<span class="token punctuation">[</span>collateralType<span class="token punctuation">]</span><span class="token punctuation">[</span>usr<span class="token punctuation">]</span><span class="token punctuation">,</span> amount<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>Public function used to transfer internal collateral balance of collateral type ilk within Vat from src to dst address.</p>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token keyword">function</span> <span class="token function">flux</span><span class="token punctuation">(</span><span class="token builtin">bytes32</span> collateralType<span class="token punctuation">,</span> <span class="token builtin">address</span> src<span class="token punctuation">,</span> <span class="token builtin">address</span> dst<span class="token punctuation">,</span> <span class="token builtin">uint256</span> amount<span class="token punctuation">)</span> <span class="token keyword">external</span> emitLog <span class="token punctuation">{</span>
+    <span class="token keyword">require</span><span class="token punctuation">(</span><span class="token function">wish</span><span class="token punctuation">(</span>src<span class="token punctuation">,</span> msg<span class="token punctuation">.</span>sender<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"CDPEngineInstance/not-allowed"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    tokenCollateral<span class="token punctuation">[</span>collateralType<span class="token punctuation">]</span><span class="token punctuation">[</span>src<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">sub</span><span class="token punctuation">(</span>tokenCollateral<span class="token punctuation">[</span>collateralType<span class="token punctuation">]</span><span class="token punctuation">[</span>src<span class="token punctuation">]</span><span class="token punctuation">,</span> amount<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    tokenCollateral<span class="token punctuation">[</span>collateralType<span class="token punctuation">]</span><span class="token punctuation">[</span>dst<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">add</span><span class="token punctuation">(</span>tokenCollateral<span class="token punctuation">[</span>collateralType<span class="token punctuation">]</span><span class="token punctuation">[</span>dst<span class="token punctuation">]</span><span class="token punctuation">,</span> amount<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>Public function used to transfer internal dai balance of user within Vat to another address.</p>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token keyword">function</span> <span class="token function">move</span><span class="token punctuation">(</span><span class="token builtin">address</span> src<span class="token punctuation">,</span> <span class="token builtin">address</span> dst<span class="token punctuation">,</span> <span class="token builtin">uint256</span> rad<span class="token punctuation">)</span> <span class="token keyword">external</span> emitLog <span class="token punctuation">{</span>
+    <span class="token keyword">require</span><span class="token punctuation">(</span><span class="token function">wish</span><span class="token punctuation">(</span>src<span class="token punctuation">,</span> msg<span class="token punctuation">.</span>sender<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"CDPEngineInstance/not-allowed"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    daiBalance<span class="token punctuation">[</span>src<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">sub</span><span class="token punctuation">(</span>daiBalance<span class="token punctuation">[</span>src<span class="token punctuation">]</span><span class="token punctuation">,</span> rad<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    daiBalance<span class="token punctuation">[</span>dst<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">add</span><span class="token punctuation">(</span>daiBalance<span class="token punctuation">[</span>dst<span class="token punctuation">]</span><span class="token punctuation">,</span> rad<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<h3 id="cdp-manipulation">CDP Manipulation</h3>
+<p>Manipulates the locked collateral and outstanding debt balance of a vault u with collateral balance from address v and dai balance of address w. Positive dink and dart values add to the existing balances while negative value subtract from them. The function also expects normalized values as inputs, which are then multiplied by rate to arrive at the amount of dai to add or subtract from on the user's address.</p>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token keyword">function</span> <span class="token function">frob</span><span class="token punctuation">(</span><span class="token builtin">bytes32</span> i<span class="token punctuation">,</span> <span class="token builtin">address</span> u<span class="token punctuation">,</span> <span class="token builtin">address</span> v<span class="token punctuation">,</span> <span class="token builtin">address</span> w<span class="token punctuation">,</span> <span class="token builtin">int</span> dink<span class="token punctuation">,</span> <span class="token builtin">int</span> dart<span class="token punctuation">)</span> <span class="token keyword">external</span> emitLog <span class="token punctuation">{</span>
+    <span class="token comment">// Ensures the system is still live and isn't going through the emergency shutdown process.</span>
+    <span class="token keyword">require</span><span class="token punctuation">(</span>NormalOperation<span class="token punctuation">,</span> <span class="token string">"CDPEngineInstance/not-NormalOperation"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    Vault <span class="token keyword">memory</span> urn <span class="token operator">=</span> vaults<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    CollateralType <span class="token keyword">memory</span> collateralType <span class="token operator">=</span> collateralTypes<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// Collateral type has to be initialized for the frob operation to succeed.</span>
+    <span class="token keyword">require</span><span class="token punctuation">(</span>collateralType<span class="token punctuation">.</span>accumulatedRates <span class="token operator">!=</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token string">"CDPEngineInstance/collateralType-not-init"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">/* Locked collateral and debt of a vault can be decreased even with the
+    add function because their inputs are signed numbers. Total amount of debt
+    issued against a collateral type is also updated. */</span>
+    urn<span class="token punctuation">.</span>lockedCollateral <span class="token operator">=</span> <span class="token function">add</span><span class="token punctuation">(</span>urn<span class="token punctuation">.</span>lockedCollateral<span class="token punctuation">,</span> dink<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    urn<span class="token punctuation">.</span>debt <span class="token operator">=</span> <span class="token function">add</span><span class="token punctuation">(</span>urn<span class="token punctuation">.</span>debt<span class="token punctuation">,</span> dart<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    collateralType<span class="token punctuation">.</span>debtAmount <span class="token operator">=</span> <span class="token function">add</span><span class="token punctuation">(</span>collateralType<span class="token punctuation">.</span>debtAmount<span class="token punctuation">,</span> dart<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+
+    <span class="token comment">/* The total change in debt of a vault is determined by multiplying the
+    input dart with the current rate of the collateral type i.
+
+    If a user wants to increase their debt by 100 dai, they will have to
+    pre-calculate this value by looking at the current rate to find the
+    dart input to call frob with.
+
+    Similarly, the total debt issued for the collateral type after the
+    vault balances are updated is calculated by multiplying rate of
+    the collateral type with the final value stored in urn,art */</span>
+    <span class="token builtin">int</span> dtab <span class="token operator">=</span> <span class="token function">mul</span><span class="token punctuation">(</span>collateralType<span class="token punctuation">.</span>accumulatedRates<span class="token punctuation">,</span> dart<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token builtin">uint</span> tab <span class="token operator">=</span> <span class="token function">mul</span><span class="token punctuation">(</span>collateralType<span class="token punctuation">.</span>accumulatedRates<span class="token punctuation">,</span> urn<span class="token punctuation">.</span>debt<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    debt <span class="token operator">=</span> <span class="token function">add</span><span class="token punctuation">(</span>debt<span class="token punctuation">,</span> dtab<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">/* The set of actions a user can perform on a vault using frob- adding
+    collateral, paying down dai debt, drawing more dai debt, etc. can
+    be classified as either safe or unsafe actions from the perspective of a vault.
+
+    Frob allows any user is allowed to perform safe actions like paying down
+    debt of a vault. Unsafe actions like removing locked collateral can only
+    be performed by the owner or an authorized address of a vault.
+
+    Cool is true when the action pays down outstanding debt of a vault.
+    Firm is true when additional collateral is locked in the vault.
+
+    Calm is true when the debt ceilings that limit the total amount of dai
+    that can be issued for a collateral type and globally across the entire
+    system are respected. The changes already made to the vault are also taken into account.
+
+    Safe is true when the vault is safely over collateralized after the
+    changes are made to dai balance and locked collateral balance.
+    Spot takes into account both the price of token reported by the price
+    feed oracles as well as the liquidation ratio set for the collateral type by MKR holders.
+
+    Irrespective of the msg.sender, one of the following has to evaluate
+    to true for the frob action to succeed:
+
+    cool &amp;&amp; firm
+    calm &amp;&amp; safe
+    cool &amp;&amp; safe
+    The owner of the vault or an authorized has to call frob if the action
+    isn't both cool and firm. The caller has to be authorized if collateral
+    balance of v is being debited. The caller has to be authorized to debit
+    dai from address w to pay down outstanding debt of a vault.
+
+    Safe actions on a vault are unsafe actions for the owners of addresses whose
+    collateral and dai balances are being decreased, hence the negation on cool
+    and firm. */</span>
+
+    <span class="token comment">// either debt has decreased, or debt ceilings are not exceeded</span>
+    <span class="token keyword">require</span><span class="token punctuation">(</span><span class="token function">either</span><span class="token punctuation">(</span>dart <span class="token operator">&lt;=</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token function">both</span><span class="token punctuation">(</span><span class="token function">mul</span><span class="token punctuation">(</span>collateralType<span class="token punctuation">.</span>debtAmount<span class="token punctuation">,</span> collateralType<span class="token punctuation">.</span>accumulatedRates<span class="token punctuation">)</span> <span class="token operator">&lt;=</span> collateralType<span class="token punctuation">.</span>debtCeiling<span class="token punctuation">,</span> debt <span class="token operator">&lt;=</span> totalDebtCeiling<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"CDPEngineInstance/ceiling-exceeded"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// urn is either less risky than before, or it is safe</span>
+    <span class="token keyword">require</span><span class="token punctuation">(</span><span class="token function">either</span><span class="token punctuation">(</span><span class="token function">both</span><span class="token punctuation">(</span>dart <span class="token operator">&lt;=</span> <span class="token number">0</span><span class="token punctuation">,</span> dink <span class="token operator">>=</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">,</span> tab <span class="token operator">&lt;=</span> <span class="token function">mul</span><span class="token punctuation">(</span>urn<span class="token punctuation">.</span>lockedCollateral<span class="token punctuation">,</span> collateralType<span class="token punctuation">.</span>safetyPrice<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"CDPEngineInstance/not-safe"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// urn is either more safe, or the owner consents</span>
+    <span class="token keyword">require</span><span class="token punctuation">(</span><span class="token function">either</span><span class="token punctuation">(</span><span class="token function">both</span><span class="token punctuation">(</span>dart <span class="token operator">&lt;=</span> <span class="token number">0</span><span class="token punctuation">,</span> dink <span class="token operator">>=</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">wish</span><span class="token punctuation">(</span>u<span class="token punctuation">,</span> msg<span class="token punctuation">.</span>sender<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"CDPEngineInstance/not-allowed-u"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// collateral src consents</span>
+    <span class="token keyword">require</span><span class="token punctuation">(</span><span class="token function">either</span><span class="token punctuation">(</span>dink <span class="token operator">&lt;=</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token function">wish</span><span class="token punctuation">(</span>v<span class="token punctuation">,</span> msg<span class="token punctuation">.</span>sender<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"CDPEngineInstance/not-allowed-v"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// debt dst consents</span>
+    <span class="token keyword">require</span><span class="token punctuation">(</span><span class="token function">either</span><span class="token punctuation">(</span>dart <span class="token operator">>=</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token function">wish</span><span class="token punctuation">(</span>w<span class="token punctuation">,</span> msg<span class="token punctuation">.</span>sender<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"CDPEngineInstance/not-allowed-w"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+
+    <span class="token comment">/* Dust limits are set to ensure there is a minimum amount of outstanding debt in a vault. */</span>
+    <span class="token comment">// urn has no debt, or a non-dusty amount</span>
+    <span class="token keyword">require</span><span class="token punctuation">(</span><span class="token function">either</span><span class="token punctuation">(</span>urn<span class="token punctuation">.</span>debt <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">,</span> tab <span class="token operator">>=</span> collateralType<span class="token punctuation">.</span>debtFloor<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"CDPEngineInstance/debtFloor"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">/* The amount of collateral to update in a vault is directly specified by the input dink.
+    Changes in the vault are now balanced by adding or removing collateral balance from
+    address v, and updating the balance of dai on address w as well as the total sum of
+    debt issued by Vat.*/</span>
+    tokenCollateral<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>v<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">sub</span><span class="token punctuation">(</span>tokenCollateral<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>v<span class="token punctuation">]</span><span class="token punctuation">,</span> dink<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    daiBalance<span class="token punctuation">[</span>w<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">add</span><span class="token punctuation">(</span>daiBalance<span class="token punctuation">[</span>w<span class="token punctuation">]</span><span class="token punctuation">,</span> dtab<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    vaults<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>u<span class="token punctuation">]</span> <span class="token operator">=</span> urn<span class="token punctuation">;</span>
+    collateralTypes<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> collateralType<span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<h3 id="cdp-fungibility">CDP Fungibility</h3>
+<p>Moves locked collateral and/or outstanding debt from one vault src to another vault dst by dink and dart amounts. This is a public function that can be called by an address that is authorized by both src and dst vaults.</p>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token keyword">function</span> <span class="token function">fork</span><span class="token punctuation">(</span><span class="token builtin">bytes32</span> collateralType<span class="token punctuation">,</span> <span class="token builtin">address</span> src<span class="token punctuation">,</span> <span class="token builtin">address</span> dst<span class="token punctuation">,</span> <span class="token builtin">int</span> dink<span class="token punctuation">,</span> <span class="token builtin">int</span> dart<span class="token punctuation">)</span> <span class="token keyword">external</span> emitLog <span class="token punctuation">{</span>
+    Vault <span class="token keyword">storage</span> u <span class="token operator">=</span> vaults<span class="token punctuation">[</span>collateralType<span class="token punctuation">]</span><span class="token punctuation">[</span>src<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    Vault <span class="token keyword">storage</span> v <span class="token operator">=</span> vaults<span class="token punctuation">[</span>collateralType<span class="token punctuation">]</span><span class="token punctuation">[</span>dst<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    CollateralType <span class="token keyword">storage</span> i <span class="token operator">=</span> collateralTypes<span class="token punctuation">[</span>collateralType<span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+    <span class="token comment">/* Positive values of dink and dart would decrease locked collateral and
+    outstanding debt amounts on the src vault and the increased by the
+    same amounts in the dst vault. */</span>
+    u<span class="token punctuation">.</span>lockedCollateral <span class="token operator">=</span> <span class="token function">sub</span><span class="token punctuation">(</span>u<span class="token punctuation">.</span>lockedCollateral<span class="token punctuation">,</span> dink<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    u<span class="token punctuation">.</span>debt <span class="token operator">=</span> <span class="token function">sub</span><span class="token punctuation">(</span>u<span class="token punctuation">.</span>debt<span class="token punctuation">,</span> dart<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    v<span class="token punctuation">.</span>lockedCollateral <span class="token operator">=</span> <span class="token function">add</span><span class="token punctuation">(</span>v<span class="token punctuation">.</span>lockedCollateral<span class="token punctuation">,</span> dink<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    v<span class="token punctuation">.</span>debt <span class="token operator">=</span> <span class="token function">add</span><span class="token punctuation">(</span>v<span class="token punctuation">.</span>debt<span class="token punctuation">,</span> dart<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token builtin">uint</span> utab <span class="token operator">=</span> <span class="token function">mul</span><span class="token punctuation">(</span>u<span class="token punctuation">.</span>debt<span class="token punctuation">,</span> i<span class="token punctuation">.</span>accumulatedRates<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token builtin">uint</span> vtab <span class="token operator">=</span> <span class="token function">mul</span><span class="token punctuation">(</span>v<span class="token punctuation">.</span>debt<span class="token punctuation">,</span> i<span class="token punctuation">.</span>accumulatedRates<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// both sides consent</span>
+    <span class="token comment">/* Both vaults need to authorize the msg.sender to perform this action even if
+    it could be a safe action on one vault. */</span>
+    <span class="token keyword">require</span><span class="token punctuation">(</span><span class="token function">both</span><span class="token punctuation">(</span><span class="token function">wish</span><span class="token punctuation">(</span>src<span class="token punctuation">,</span> msg<span class="token punctuation">.</span>sender<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">wish</span><span class="token punctuation">(</span>dst<span class="token punctuation">,</span> msg<span class="token punctuation">.</span>sender<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"CDPEngineInstance/not-allowed"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// both sides safe</span>
+    <span class="token comment">/* Checks to ensure both the vaults remain safe after the adjustments */</span>
+    <span class="token keyword">require</span><span class="token punctuation">(</span>utab <span class="token operator">&lt;=</span> <span class="token function">mul</span><span class="token punctuation">(</span>u<span class="token punctuation">.</span>lockedCollateral<span class="token punctuation">,</span> i<span class="token punctuation">.</span>safetyPrice<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"CDPEngineInstance/not-safe-src"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">require</span><span class="token punctuation">(</span>vtab <span class="token operator">&lt;=</span> <span class="token function">mul</span><span class="token punctuation">(</span>v<span class="token punctuation">.</span>lockedCollateral<span class="token punctuation">,</span> i<span class="token punctuation">.</span>safetyPrice<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"CDPEngineInstance/not-safe-dst"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// both sides non-dusty</span>
+    <span class="token comment">// Checks to ensure both vaults respect the dust limit set for the collateral type.</span>
+    <span class="token keyword">require</span><span class="token punctuation">(</span><span class="token function">either</span><span class="token punctuation">(</span>utab <span class="token operator">>=</span> i<span class="token punctuation">.</span>debtFloor<span class="token punctuation">,</span> u<span class="token punctuation">.</span>debt <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"CDPEngineInstance/debtFloor-src"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">require</span><span class="token punctuation">(</span><span class="token function">either</span><span class="token punctuation">(</span>vtab <span class="token operator">>=</span> i<span class="token punctuation">.</span>debtFloor<span class="token punctuation">,</span> v<span class="token punctuation">.</span>debt <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"CDPEngineInstance/debtFloor-dst"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<h3 id="cdp-confiscation">CDP Confiscation</h3>
+<p>Can increase/decrease locked collateral and outstanding debt on a vault. Changes in debt on a vault u is balanced with an increase or decrease of sin balance on address w, typically Vow. Changes in the amount of locked collateral on a vault is balanced with an increase or decrease of collateral balance of address v. Only sin balance on an address can be modified and dai balance of an address cannot be changed. The following addresses/contracts are currently authorized to call this restricted function: Cat</p>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token keyword">function</span> <span class="token function">grab</span><span class="token punctuation">(</span><span class="token builtin">bytes32</span> i<span class="token punctuation">,</span> <span class="token builtin">address</span> u<span class="token punctuation">,</span> <span class="token builtin">address</span> v<span class="token punctuation">,</span> <span class="token builtin">address</span> w<span class="token punctuation">,</span> <span class="token builtin">int</span> dink<span class="token punctuation">,</span> <span class="token builtin">int</span> dart<span class="token punctuation">)</span> <span class="token keyword">external</span> emitLog onlyOwners <span class="token punctuation">{</span>
+    Vault <span class="token keyword">storage</span> urn <span class="token operator">=</span> vaults<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    CollateralType <span class="token keyword">storage</span> collateralType <span class="token operator">=</span> collateralTypes<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+    <span class="token comment">/* Both locked collateral and debt of a vault can be decreased even
+    with the add function because their inputs are signed numbers. Total
+    amount of debt issued against a collateral type is also updated. */</span>
+    urn<span class="token punctuation">.</span>lockedCollateral <span class="token operator">=</span> <span class="token function">add</span><span class="token punctuation">(</span>urn<span class="token punctuation">.</span>lockedCollateral<span class="token punctuation">,</span> dink<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    urn<span class="token punctuation">.</span>debt <span class="token operator">=</span> <span class="token function">add</span><span class="token punctuation">(</span>urn<span class="token punctuation">.</span>debt<span class="token punctuation">,</span> dart<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    collateralType<span class="token punctuation">.</span>debtAmount <span class="token operator">=</span> <span class="token function">add</span><span class="token punctuation">(</span>collateralType<span class="token punctuation">.</span>debtAmount<span class="token punctuation">,</span> dart<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">/* Collateral balance of address v and bad debt balance sin of
+    address w are updated. Global bad debt amount vice is also updated.*/</span>
+    <span class="token builtin">int</span> dtab <span class="token operator">=</span> <span class="token function">mul</span><span class="token punctuation">(</span>collateralType<span class="token punctuation">.</span>accumulatedRates<span class="token punctuation">,</span> dart<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    tokenCollateral<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>v<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">sub</span><span class="token punctuation">(</span>tokenCollateral<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>v<span class="token punctuation">]</span><span class="token punctuation">,</span> dink<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    badDebt<span class="token punctuation">[</span>w<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">sub</span><span class="token punctuation">(</span>badDebt<span class="token punctuation">[</span>w<span class="token punctuation">]</span><span class="token punctuation">,</span> dtab<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    totalBadDebt <span class="token operator">=</span> <span class="token function">sub</span><span class="token punctuation">(</span>totalBadDebt<span class="token punctuation">,</span> dtab<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<h3 id="settlement">Settlement</h3>
+<p>Allows anyone to cancel the bad debt present on an address with its own dai balance. All bad debt in the system is currently accounted for on the address of the Vow contract. A MKR debt auction can be triggered to cover the remaining bad debt after all the surplus on Vow is used up.</p>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token keyword">function</span> <span class="token function">heal</span><span class="token punctuation">(</span><span class="token builtin">uint</span> rad<span class="token punctuation">)</span> <span class="token keyword">external</span> emitLog <span class="token punctuation">{</span>
+    <span class="token builtin">address</span> u <span class="token operator">=</span> msg<span class="token punctuation">.</span>sender<span class="token punctuation">;</span>
+    <span class="token comment">/* heal accepts a positive number as an input. Dai balance and bad
+    debt balance of the address are reduced. Total bad debt and debt
+    in the system are reduced.*/</span>
+    badDebt<span class="token punctuation">[</span>u<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">sub</span><span class="token punctuation">(</span>badDebt<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">,</span> rad<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    daiBalance<span class="token punctuation">[</span>u<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">sub</span><span class="token punctuation">(</span>daiBalance<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">,</span> rad<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    totalBadDebt <span class="token operator">=</span> <span class="token function">sub</span><span class="token punctuation">(</span>totalBadDebt<span class="token punctuation">,</span> rad<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    debt <span class="token operator">=</span> <span class="token function">sub</span><span class="token punctuation">(</span>debt<span class="token punctuation">,</span> rad<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>Generates dai on address u and accounted as bad debt on address v without opening a vault. Governors of the system can call this restricted function through an executive vote to create dai and let Vow handle the resulting bad debt in the system. No addresses/contracts are currently authorized to call this restricted function.</p>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token keyword">function</span> <span class="token function">suck</span><span class="token punctuation">(</span><span class="token builtin">address</span> u<span class="token punctuation">,</span> <span class="token builtin">address</span> v<span class="token punctuation">,</span> <span class="token builtin">uint</span> rad<span class="token punctuation">)</span> <span class="token keyword">external</span> emitLog onlyOwners <span class="token punctuation">{</span>
+    badDebt<span class="token punctuation">[</span>u<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">add</span><span class="token punctuation">(</span>badDebt<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">,</span> rad<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    daiBalance<span class="token punctuation">[</span>v<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">add</span><span class="token punctuation">(</span>daiBalance<span class="token punctuation">[</span>v<span class="token punctuation">]</span><span class="token punctuation">,</span> rad<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// Total debt and bad debt in the system are increased.</span>
+    totalBadDebt <span class="token operator">=</span> <span class="token function">add</span><span class="token punctuation">(</span>totalBadDebt<span class="token punctuation">,</span> rad<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    debt <span class="token operator">=</span> <span class="token function">add</span><span class="token punctuation">(</span>debt<span class="token punctuation">,</span> rad<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<h3 id="rates">Rates</h3>
+<p>Fold increases rate of a collateral type i to proportionally increase the outstanding debt of all its vaults, typically to assess the stability fee. It also increases the dai balance of address u to add a surplus to the Vow contract. It can also decrease the debt of all vaults in collateral type i by debiting the dai balance of address u to reduce the debt of all vaults in a collateral type by decreasing the dai balance of Vow. The following addresses/contracts are currently authorized to call this restricted function: Jug. As compared to Single Collateral Dai, we can now:</p>
+<ul>
+<li>Continually assess stability fee every block and not just collect when debt is repaid by the vault.</li>
+<li>Remove the need for vault owners to pay this fee in MKR.</li>
+</ul>
+<pre class="language-solidity" tabindex="0"><code class="language-solidity"><span class="token keyword">function</span> <span class="token function">fold</span><span class="token punctuation">(</span><span class="token builtin">bytes32</span> i<span class="token punctuation">,</span> <span class="token builtin">address</span> u<span class="token punctuation">,</span> <span class="token builtin">int</span> accumulatedRates<span class="token punctuation">)</span> <span class="token keyword">external</span> emitLog onlyOwners <span class="token punctuation">{</span>
+    <span class="token keyword">require</span><span class="token punctuation">(</span>NormalOperation<span class="token punctuation">,</span> <span class="token string">"CDPEngineInstance/not-NormalOperation"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    CollateralType <span class="token keyword">storage</span> collateralType <span class="token operator">=</span> collateralTypes<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+    <span class="token comment">/* A positive value increases the rate of a collateral type to add
+    debt to all its vaults simultaneously. Please note that the outstanding
+    debt of a vault at all times is calculated by multiplying it's normalized
+    debt value with the rate variable stored for it's collateral type.*/</span>
+    collateralType<span class="token punctuation">.</span>accumulatedRates <span class="token operator">=</span> <span class="token function">add</span><span class="token punctuation">(</span>collateralType<span class="token punctuation">.</span>accumulatedRates<span class="token punctuation">,</span> accumulatedRates<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">/* Dai balance of the address u and global debt are updated based on whether
+    debt was collected or paid back for a collateral type. */</span>
+    <span class="token builtin">int</span> rad <span class="token operator">=</span> <span class="token function">mul</span><span class="token punctuation">(</span>collateralType<span class="token punctuation">.</span>debtAmount<span class="token punctuation">,</span> accumulatedRates<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    daiBalance<span class="token punctuation">[</span>u<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">add</span><span class="token punctuation">(</span>daiBalance<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">,</span> rad<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    debt <span class="token operator">=</span> <span class="token function">add</span><span class="token punctuation">(</span>debt<span class="token punctuation">,</span> rad<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/blog/Internet is Culture/">Internet Is Culture: Why Web3 Is the Future of Human Connection</a></li><li class="links-nextprev-next">Next →<br><a href="/blog/design_by_induction/"></a></li>
+</ul>
+
+			</heading-anchors>
+		</main>
+
+		<footer>
+			<p><em>Built with ❄️ 💊 🚬 </em></p>
+		</footer>
+
+		<!-- This page `/blog/makerdao-documentation/` was built on 2025-03-06T13:12:56.931Z -->
+		<script type="module" src="/dist/xbxy_EL6cU.js"></script>
+	</body>
+</html>

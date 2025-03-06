@@ -1,0 +1,771 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Internet Is Culture: Why Web3 Is the Future of Human Connection</title>
+		<meta name="description" content="Engineering Polemic">
+		<link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="Dear Diary">
+		
+		<style>/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0, 0, 0, 0.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}
+/* This is an arbitrary CSS string added to the bundle */
+/* Defaults */
+:root {
+	--font-family: -apple-system, system-ui, sans-serif;
+	--font-family-monospace:
+		Consolas, Menlo, Monaco, Andale Mono WT, Andale Mono, Lucida Console, Lucida Sans Typewriter, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Courier New, Courier, monospace;
+}
+
+/* Theme colors */
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #c0c0c0;
+	--color-gray-90: #333;
+
+	--background-color: #fff;
+
+	--text-color: var(--color-gray-90);
+	--text-color-link: #082840;
+	--text-color-link-active: #5f2b48;
+	--text-color-link-visited: #17050f;
+
+	--syntax-tab-size: 2;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-gray-20: #e0e0e0;
+		--color-gray-50: #c0c0c0;
+		--color-gray-90: #dad8d8;
+
+		/* --text-color is assigned to --color-gray-_ above */
+		--text-color-link: #1493fb;
+		--text-color-link-active: #6969f7;
+		--text-color-link-visited: #a6a6f8;
+
+		--background-color: #15202b;
+	}
+}
+
+/* Global stylesheet */
+* {
+	box-sizing: border-box;
+}
+
+@view-transition {
+	navigation: auto;
+}
+
+html,
+body {
+	padding: 0;
+	margin: 0 auto;
+	font-family: var(--font-family);
+	color: var(--text-color);
+	background-color: var(--background-color);
+}
+html {
+	overflow-y: scroll;
+}
+body {
+	max-width: 40em;
+}
+
+/* https://www.a11yproject.com/posts/how-to-hide-content/ */
+.visually-hidden {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+/* Fluid images via https://www.zachleat.com/web/fluid-images/ */
+img {
+	max-width: 100%;
+}
+img[width][height] {
+	height: auto;
+}
+img[src$=".svg"] {
+	width: 100%;
+	height: auto;
+	max-width: none;
+}
+video,
+iframe {
+	width: 100%;
+	height: auto;
+}
+iframe {
+	aspect-ratio: 16 / 9;
+}
+
+p:last-child {
+	margin-bottom: 0;
+}
+p {
+	line-height: 1.5;
+}
+
+li {
+	line-height: 1.5;
+}
+
+a[href] {
+	color: var(--text-color-link);
+}
+a[href]:visited {
+	color: var(--text-color-link-visited);
+}
+a[href]:hover,
+a[href]:active {
+	color: var(--text-color-link-active);
+}
+
+main,
+footer {
+	padding: 1rem;
+}
+main :first-child {
+	margin-top: 0;
+}
+
+header {
+	border-bottom: 1px dashed var(--color-gray-20);
+}
+
+.links-nextprev {
+	display: flex;
+	justify-content: space-between;
+	gap: .5em 1em;
+	list-style: "";
+	border-top: 1px dashed var(--color-gray-20);
+	padding: 1em 0;
+}
+.links-nextprev > * {
+	flex-grow: 1;
+}
+.links-nextprev-next {
+	text-align: right;
+}
+
+table {
+	margin: 1em 0;
+}
+table td,
+table th {
+	padding-right: 1em;
+}
+
+pre,
+code {
+	font-family: var(--font-family-monospace);
+}
+pre:not([class*="language-"]) {
+	margin: .5em 0;
+	line-height: 1.375; /* 22px /16 */
+	-moz-tab-size: var(--syntax-tab-size);
+	-o-tab-size: var(--syntax-tab-size);
+	tab-size: var(--syntax-tab-size);
+	-webkit-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+	direction: ltr;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	overflow-x: auto;
+}
+code {
+	word-break: break-all;
+}
+
+/* Header */
+header {
+	display: flex;
+	gap: 1em;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1em;
+}
+.home-link {
+	flex-grow: 1;
+	font-size: 1em; /* 16px /16 */
+	font-weight: 700;
+}
+.home-link:link:not(:hover) {
+	text-decoration: none;
+}
+
+/* Nav */
+.nav {
+	display: flex;
+	gap: .5em 1em;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+.nav-item {
+	display: inline-block;
+}
+.nav-item a[href]:not(:hover) {
+	text-decoration: none;
+}
+.nav a[href][aria-current="page"] {
+	text-decoration: underline;
+}
+
+/* Posts list */
+.postlist {
+	list-style: none;
+	padding: 0;
+	padding-left: 1.5rem;
+}
+.postlist-item {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	counter-increment: start-from -1;
+	margin-bottom: 1em;
+}
+.postlist-item:before {
+	display: inline-block;
+	pointer-events: none;
+	content: "" counter(start-from, decimal-leading-zero) ". ";
+	line-height: 100%;
+	text-align: right;
+	margin-left: -1.5rem;
+}
+.postlist-date,
+.postlist-item:before {
+	font-size: 0.8125em; /* 13px /16 */
+	color: var(--color-gray-90);
+}
+.postlist-date {
+	word-spacing: -0.5px;
+}
+.postlist-link {
+	font-size: 1.1875em; /* 19px /16 */
+	font-weight: 700;
+	flex-basis: calc(100% - 1.5rem);
+	padding-left: .25em;
+	padding-right: .5em;
+	text-underline-position: from-font;
+	text-underline-offset: 0;
+	text-decoration-thickness: 1px;
+}
+.postlist-item-active .postlist-link {
+	font-weight: bold;
+}
+
+/* Tags */
+.post-tag {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-transform: capitalize;
+	font-style: italic;
+}
+.postlist-item > .post-tag {
+	align-self: center;
+}
+
+/* Tags list */
+.post-metadata {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: .5em;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.post-metadata time {
+	margin-right: 1em;
+}
+
+
+a {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+/* ***************************  %DEVELOPER DOC% *************************** */
+
+/*
+ * Wrap inline code samples otherwise they shoot of the side and
+ * can't be read at all.
+ */
+
+ code {
+	white-space: pre-wrap;
+	word-wrap: break-word;
+	padding: 2px 5px;
+}
+
+/**
+* Make code blocks display as blocks and give them the appropriate
+* font size and padding.
+*
+*/
+
+pre code {
+white-space: pre;
+word-wrap: normal;
+display: block;
+padding: 12px;
+font-size: 12px;
+}
+
+/*
+* Fix links to have dotted lines instead of normal underline only.
+*
+*/
+
+a {
+text-decoration-style: dotted;
+}
+
+a:hover {
+text-decoration-thickness: 2px;
+}
+
+/*
+* Fix link colors when the link text is inline code.
+*
+*/
+
+a code {
+	color: #2980B9;
+}
+a:hover code {
+	color: #3091d1;
+}
+a:visited code {
+	color: #9B59B6;
+}
+
+/*
+* Enforce CSS classes from highlight.js with theme
+*
+*/
+
+pre .cs, pre .c {
+	font-weight: inherit;
+	font-style: inherit;
+}
+
+/*
+* Fixes issues with non-highlighted code samples.
+*
+*/
+
+.no-highlight {
+display: block;
+padding: 0.5em;
+color: #333;
+}
+
+/*
+* Add some display code to prevent the $ from being copied
+*
+*```bash
+* <screen>
+*!    <prompt>$ <prompt>git clone https://github.com/$USR/$REPO.git
+* </screen>
+*```
+*
+*/
+
+.prompt {
+	user-select: none;
+	-moz-user-select: none;
+}
+
+/*
+* Diff Support
+* @usage
+* <link href="https://unpkg.com/prismjs@1.20.0/themes/prism-okaidia.css" rel="stylesheet">
+*
+*/
+
+.token.deleted {
+background-color: hsl(350deg 100% 88% / 47%);
+}
+.token.inserted {
+background-color: hsl(120deg 73% 75% / 35%);
+}
+
+/*
+* Make the + and - characters unselectable for copy/paste
+*
+*/
+
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+-webkit-user-select: none;
+user-select: none;
+}
+
+/*
+* Optional: full-width background color
+*
+*/
+
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+display: block;
+}
+
+
+/* *************************** %TEXT STYLING% *************************** */
+
+
+/* Paragraphs */
+p, pre {
+margin: 0 auto 1rem;
+}
+:is(p, pre):last-child {
+margin-bottom: 0;
+}
+/* Preformatted text */
+pre {
+position: relative;
+overflow: auto;
+padding: 1rem;
+border-radius: var(--bd-radius);
+background: var(--bg-muted);
+font-size: 0.9rem;
+line-height: 1.6;
+box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+pre > code {
+overflow: visible;
+padding: 0;
+border-radius: 0;
+background: transparent;
+font-size: inherit;
+}
+
+/* Quotation block */
+blockquote {
+padding: 0.5rem 1.5rem;
+border-left: 0.25rem solid var(--primary-color);
+margin: 0 0 1.5rem;
+color: var(--muted);
+background: var(--bg-light);
+border-radius: var(--bd-radius);
+box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+blockquote > cite:last-child {
+display: block;
+padding-left: 2rem;
+margin-top: 0.5rem;
+text-decoration: none;
+font-style: italic;
+}
+
+blockquote > cite:last-child::before {
+content: "— ";
+}
+
+/* *************************** %TABLE STYLING% *************************** */
+
+
+table {
+width: 100%;
+max-width: 100%;
+margin: 0 auto 1rem;
+border-collapse: collapse;
+overflow-x: auto;
+border-radius: 0.5rem;
+box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.table-responsive {
+display: block;
+width: 100%;
+overflow-x: auto;
+}
+
+caption {
+margin-top: 0.5rem;
+caption-side: bottom;
+color: var(--muted);
+font-size: 0.875rem;
+}
+
+tbody > tr:nth-child(2n) {
+background: var(--bg-muted);
+}
+
+th, td {
+padding: 0.75rem 1rem;
+border: 1px solid var(--bd-muted);
+text-align: left;
+}
+
+th {
+background: var(--bg-subtle);
+font-weight: 600;
+color: var(--primary-color);
+text-transform: uppercase;
+letter-spacing: 0.1rem;
+}
+
+td {
+color: var(--text-color);
+}
+
+table.center th, table.center td {
+text-align: center;
+}
+
+/* Hover effects for better interactivity */
+tbody tr:hover {
+background: var(--bg-hover);
+}
+
+th, td {
+transition: background-color 0.3s ease, color 0.3s ease;
+}</style>
+	</head>
+	<body>
+		<a href="#skip" class="visually-hidden">Skip to main content</a>
+
+		<header>
+			<a href="/" class="home-link">Dear Diary</a>
+			<nav>
+				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<ul class="nav">
+					<li class="nav-item"><a href="/">Home</a></li>
+					<li class="nav-item"><a href="/blog/">Archive</a></li>
+					<li class="nav-item"><a href="/about/">About</a></li>
+					<li class="nav-item"><a href="/feed/feed.xml">Feed</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<main id="skip">
+			<heading-anchors>
+				
+<h1 id="internet-is-culture-why-web3-is-the-future-of-human-connection">Internet Is Culture: Why Web3 Is the Future of Human Connection</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2024-08-24">24 August 2024</time></li>
+</ul>
+
+<h1 id="internet-is-culture-why-web3-is-the-future-of-human-connection-2">Internet Is Culture: Why Web3 Is the Future of Human Connection</h1>
+<blockquote>
+<p>We must acknowledge a simple but profound truth:</p>
+<p><em>The internet is no longer just a platform—it is culture itself.</em></p>
+<p>Every aspect of our lives is now mediated through the digital realm, and the way we navigate this space will define the future of human connection. Web3 is not just an investment opportunity; it is the foundation upon which the next era of culture will be built.</p>
+</blockquote>
+<p><strong>The rest of this is transcribed from the video essay by 'ArtChad' on YouTube. All rights respective of their authors.</strong></p>
+<h3 id="the-internets-political-shift-the-death-of-the-normie-creator">The Internet's Political Shift: The Death of the &quot;Normie&quot; Creator</h3>
+<p>The cultural landscape of the internet has undergone a seismic shift. What was once a space for entertainment and mild discourse has transformed into a battleground of political ideologies and authenticity tests. The internet has become an all-encompassing hyperobject, where everything is connected, and nothing can be avoided—including politics.</p>
+<h3 id="from-taboo-to-ubiquitous-the-politicization-of-everything">From Taboo to Ubiquitous: The Politicization of Everything</h3>
+<p>There was a time when politics was a topic to be avoided, especially in casual settings like the dinner table. It was something your grandfather might bring up, making everyone uncomfortable until the subject was quickly changed to maintain peace. Politics, back then, had a clear definition: it was about government, policy, and the actions of those in power. Today, however, that definition has expanded to include virtually everything—from the culture of financial institutions to the personal grooming habits of public figures.</p>
+<p>In this new era, even the most mundane aspects of life are viewed through a political lens. Whether it's the appearance of a politician or the political affiliations of celebrities, everything is scrutinized. The internet, as the dominant medium of communication, fuels this trend by thriving on engagement, often driven by the most controversial and divisive content.</p>
+<h3 id="the-internets-new-reality-no-room-for-the-normie">The Internet's New Reality: No Room for the &quot;Normie&quot;</h3>
+<p>In this hyper-politicized environment, no creator can remain neutral or apolitical. Even the most seemingly harmless internet figures, like Mr. Beast or Charlie (Moist Critical), find themselves embroiled in controversies that go beyond simple online drama. Mr. Beast's current controversy isn't just about a creepy friend; it's tied to deeper societal issues, like the role of transgender people in media. Similarly, Charlie's debate with Sneeko isn't just about their differing opinions—it’s about how he got roped into a political discussion that his audience wasn't used to.</p>
+<p>The reality is that the internet now demands creators to take clear stances on political issues, whether they want to or not. The days of building a massive following by being a &quot;nice guy&quot; who avoids controversy are over. Audiences are no longer content with surface-level engagement; they demand transparency and authenticity. They want to know where creators stand on the issues that matter to them, and they won't accept anything less.</p>
+<h3 id="the-collapse-of-the-nice-guy-empire">The Collapse of the Nice Guy Empire</h3>
+<p>The &quot;nice guy&quot; persona, once a safe and effective way to build an online presence, is no longer viable. Creators who try to maintain a neutral or uncontroversial stance are finding that their audiences either force them to reveal their true beliefs or turn on them when those beliefs are finally exposed. We see this in the rise of politically engaged creators like Aiden Ross, iShowSpeed, and the Nelk Boys, who have all taken clear stances on various issues, from supporting Trump to being pro-Palestine.</p>
+<p>Even creators who were once considered &quot;safe&quot; are now choosing to get political. For instance, Pokimane, who has long been a non-controversial figure, is now openly pro-Palestine. This shift is not just about personal beliefs; it's about survival in a new internet landscape where being apolitical is no longer an option.</p>
+<h3 id="the-new-rules-of-the-internet">The New Rules of the Internet</h3>
+<p>If you're building a career on the internet today, you have to play by its new rules. You have to be transparent, authentic, and yes, political. The internet is now a radical, all-encompassing, and transparent medium. If you suppress your true self to maintain a broad audience, you risk building a following that doesn't really know you—and when they finally do, the backlash can be severe.</p>
+<p>Creators now face a difficult choice: be authentic and risk alienating parts of their audience, or try to remain neutral and risk losing credibility and relevance. The internet no longer allows for the nice guy or the normie. It's a new world, one where cultural shifts are rapid and unrelenting, and where audiences expect more than just entertainment—they expect creators to take a stand.</p>
+<h3 id="conclusion-the-end-of-the-normie-era">Conclusion: The End of the Normie Era</h3>
+<p>We are witnessing the collapse of the nice guy empire and the death of the normie creator. The internet has changed, and with it, the expectations of those who consume content online. In this new world, you either pick a side, or your audience will force you to. The days of remaining apolitical or uncontroversial are over. The internet is no longer just a platform—it's the entirety of culture itself. And in this culture, authenticity and political engagement are no longer optional; they are essential.</p>
+<p>As we move forward, creators will have to navigate this complex and often volatile landscape carefully. Those who fail to adapt will find themselves left behind, while those who embrace the new rules of the internet may thrive in ways they never imagined. It's a challenging time, but also an exciting one, where the power dynamics of online fame are being rewritten in real-time.</p>
+<p>So, as you watch your favorite creators and engage with content online, remember: the audience isn't dumb, and they are paying attention to everything.</p>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/blog/Preemptive Subrogation/">Preemptive Subrogation</a></li><li class="links-nextprev-next">Next →<br><a href="/blog/makerdao-documentation/">MakerDAO is a Lending Protocol not a Stablecoin</a></li>
+</ul>
+
+			</heading-anchors>
+		</main>
+
+		<footer>
+			<p><em>Built with ❄️ 💊 🚬 </em></p>
+		</footer>
+
+		<!-- This page `/blog/Internet is Culture/` was built on 2025-03-06T13:12:56.931Z -->
+		<script type="module" src="/dist/xbxy_EL6cU.js"></script>
+	</body>
+</html>

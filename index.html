@@ -1,0 +1,627 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Dear Diary</title>
+		<meta name="description" content="Engineering Polemic">
+		<link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="Dear Diary">
+		
+		<style>.postlist { counter-reset: start-from 6 }
+/* Message Box */
+.message-box {
+	--color-message-box: #ffc;
+
+	display: block;
+	background-color: var(--color-message-box);
+	color: var(--color-gray-90);
+	padding: 1em 0.625em; /* 16px 10px /16 */
+}
+.message-box ol {
+	margin-top: 0;
+}
+
+@media (prefers-color-scheme: dark) {
+	.message-box {
+		--color-message-box: #082840;
+	}
+}
+/* This is an arbitrary CSS string added to the bundle */
+/* Defaults */
+:root {
+	--font-family: -apple-system, system-ui, sans-serif;
+	--font-family-monospace:
+		Consolas, Menlo, Monaco, Andale Mono WT, Andale Mono, Lucida Console, Lucida Sans Typewriter, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Courier New, Courier, monospace;
+}
+
+/* Theme colors */
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #c0c0c0;
+	--color-gray-90: #333;
+
+	--background-color: #fff;
+
+	--text-color: var(--color-gray-90);
+	--text-color-link: #082840;
+	--text-color-link-active: #5f2b48;
+	--text-color-link-visited: #17050f;
+
+	--syntax-tab-size: 2;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-gray-20: #e0e0e0;
+		--color-gray-50: #c0c0c0;
+		--color-gray-90: #dad8d8;
+
+		/* --text-color is assigned to --color-gray-_ above */
+		--text-color-link: #1493fb;
+		--text-color-link-active: #6969f7;
+		--text-color-link-visited: #a6a6f8;
+
+		--background-color: #15202b;
+	}
+}
+
+/* Global stylesheet */
+* {
+	box-sizing: border-box;
+}
+
+@view-transition {
+	navigation: auto;
+}
+
+html,
+body {
+	padding: 0;
+	margin: 0 auto;
+	font-family: var(--font-family);
+	color: var(--text-color);
+	background-color: var(--background-color);
+}
+html {
+	overflow-y: scroll;
+}
+body {
+	max-width: 40em;
+}
+
+/* https://www.a11yproject.com/posts/how-to-hide-content/ */
+.visually-hidden {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+/* Fluid images via https://www.zachleat.com/web/fluid-images/ */
+img {
+	max-width: 100%;
+}
+img[width][height] {
+	height: auto;
+}
+img[src$=".svg"] {
+	width: 100%;
+	height: auto;
+	max-width: none;
+}
+video,
+iframe {
+	width: 100%;
+	height: auto;
+}
+iframe {
+	aspect-ratio: 16 / 9;
+}
+
+p:last-child {
+	margin-bottom: 0;
+}
+p {
+	line-height: 1.5;
+}
+
+li {
+	line-height: 1.5;
+}
+
+a[href] {
+	color: var(--text-color-link);
+}
+a[href]:visited {
+	color: var(--text-color-link-visited);
+}
+a[href]:hover,
+a[href]:active {
+	color: var(--text-color-link-active);
+}
+
+main,
+footer {
+	padding: 1rem;
+}
+main :first-child {
+	margin-top: 0;
+}
+
+header {
+	border-bottom: 1px dashed var(--color-gray-20);
+}
+
+.links-nextprev {
+	display: flex;
+	justify-content: space-between;
+	gap: .5em 1em;
+	list-style: "";
+	border-top: 1px dashed var(--color-gray-20);
+	padding: 1em 0;
+}
+.links-nextprev > * {
+	flex-grow: 1;
+}
+.links-nextprev-next {
+	text-align: right;
+}
+
+table {
+	margin: 1em 0;
+}
+table td,
+table th {
+	padding-right: 1em;
+}
+
+pre,
+code {
+	font-family: var(--font-family-monospace);
+}
+pre:not([class*="language-"]) {
+	margin: .5em 0;
+	line-height: 1.375; /* 22px /16 */
+	-moz-tab-size: var(--syntax-tab-size);
+	-o-tab-size: var(--syntax-tab-size);
+	tab-size: var(--syntax-tab-size);
+	-webkit-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+	direction: ltr;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	overflow-x: auto;
+}
+code {
+	word-break: break-all;
+}
+
+/* Header */
+header {
+	display: flex;
+	gap: 1em;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1em;
+}
+.home-link {
+	flex-grow: 1;
+	font-size: 1em; /* 16px /16 */
+	font-weight: 700;
+}
+.home-link:link:not(:hover) {
+	text-decoration: none;
+}
+
+/* Nav */
+.nav {
+	display: flex;
+	gap: .5em 1em;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+.nav-item {
+	display: inline-block;
+}
+.nav-item a[href]:not(:hover) {
+	text-decoration: none;
+}
+.nav a[href][aria-current="page"] {
+	text-decoration: underline;
+}
+
+/* Posts list */
+.postlist {
+	list-style: none;
+	padding: 0;
+	padding-left: 1.5rem;
+}
+.postlist-item {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	counter-increment: start-from -1;
+	margin-bottom: 1em;
+}
+.postlist-item:before {
+	display: inline-block;
+	pointer-events: none;
+	content: "" counter(start-from, decimal-leading-zero) ". ";
+	line-height: 100%;
+	text-align: right;
+	margin-left: -1.5rem;
+}
+.postlist-date,
+.postlist-item:before {
+	font-size: 0.8125em; /* 13px /16 */
+	color: var(--color-gray-90);
+}
+.postlist-date {
+	word-spacing: -0.5px;
+}
+.postlist-link {
+	font-size: 1.1875em; /* 19px /16 */
+	font-weight: 700;
+	flex-basis: calc(100% - 1.5rem);
+	padding-left: .25em;
+	padding-right: .5em;
+	text-underline-position: from-font;
+	text-underline-offset: 0;
+	text-decoration-thickness: 1px;
+}
+.postlist-item-active .postlist-link {
+	font-weight: bold;
+}
+
+/* Tags */
+.post-tag {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-transform: capitalize;
+	font-style: italic;
+}
+.postlist-item > .post-tag {
+	align-self: center;
+}
+
+/* Tags list */
+.post-metadata {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: .5em;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.post-metadata time {
+	margin-right: 1em;
+}
+
+
+a {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+/* ***************************  %DEVELOPER DOC% *************************** */
+
+/*
+ * Wrap inline code samples otherwise they shoot of the side and
+ * can't be read at all.
+ */
+
+ code {
+	white-space: pre-wrap;
+	word-wrap: break-word;
+	padding: 2px 5px;
+}
+
+/**
+* Make code blocks display as blocks and give them the appropriate
+* font size and padding.
+*
+*/
+
+pre code {
+white-space: pre;
+word-wrap: normal;
+display: block;
+padding: 12px;
+font-size: 12px;
+}
+
+/*
+* Fix links to have dotted lines instead of normal underline only.
+*
+*/
+
+a {
+text-decoration-style: dotted;
+}
+
+a:hover {
+text-decoration-thickness: 2px;
+}
+
+/*
+* Fix link colors when the link text is inline code.
+*
+*/
+
+a code {
+	color: #2980B9;
+}
+a:hover code {
+	color: #3091d1;
+}
+a:visited code {
+	color: #9B59B6;
+}
+
+/*
+* Enforce CSS classes from highlight.js with theme
+*
+*/
+
+pre .cs, pre .c {
+	font-weight: inherit;
+	font-style: inherit;
+}
+
+/*
+* Fixes issues with non-highlighted code samples.
+*
+*/
+
+.no-highlight {
+display: block;
+padding: 0.5em;
+color: #333;
+}
+
+/*
+* Add some display code to prevent the $ from being copied
+*
+*```bash
+* <screen>
+*!    <prompt>$ <prompt>git clone https://github.com/$USR/$REPO.git
+* </screen>
+*```
+*
+*/
+
+.prompt {
+	user-select: none;
+	-moz-user-select: none;
+}
+
+/*
+* Diff Support
+* @usage
+* <link href="https://unpkg.com/prismjs@1.20.0/themes/prism-okaidia.css" rel="stylesheet">
+*
+*/
+
+.token.deleted {
+background-color: hsl(350deg 100% 88% / 47%);
+}
+.token.inserted {
+background-color: hsl(120deg 73% 75% / 35%);
+}
+
+/*
+* Make the + and - characters unselectable for copy/paste
+*
+*/
+
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+-webkit-user-select: none;
+user-select: none;
+}
+
+/*
+* Optional: full-width background color
+*
+*/
+
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+display: block;
+}
+
+
+/* *************************** %TEXT STYLING% *************************** */
+
+
+/* Paragraphs */
+p, pre {
+margin: 0 auto 1rem;
+}
+:is(p, pre):last-child {
+margin-bottom: 0;
+}
+/* Preformatted text */
+pre {
+position: relative;
+overflow: auto;
+padding: 1rem;
+border-radius: var(--bd-radius);
+background: var(--bg-muted);
+font-size: 0.9rem;
+line-height: 1.6;
+box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+pre > code {
+overflow: visible;
+padding: 0;
+border-radius: 0;
+background: transparent;
+font-size: inherit;
+}
+
+/* Quotation block */
+blockquote {
+padding: 0.5rem 1.5rem;
+border-left: 0.25rem solid var(--primary-color);
+margin: 0 0 1.5rem;
+color: var(--muted);
+background: var(--bg-light);
+border-radius: var(--bd-radius);
+box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+blockquote > cite:last-child {
+display: block;
+padding-left: 2rem;
+margin-top: 0.5rem;
+text-decoration: none;
+font-style: italic;
+}
+
+blockquote > cite:last-child::before {
+content: "— ";
+}
+
+/* *************************** %TABLE STYLING% *************************** */
+
+
+table {
+width: 100%;
+max-width: 100%;
+margin: 0 auto 1rem;
+border-collapse: collapse;
+overflow-x: auto;
+border-radius: 0.5rem;
+box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.table-responsive {
+display: block;
+width: 100%;
+overflow-x: auto;
+}
+
+caption {
+margin-top: 0.5rem;
+caption-side: bottom;
+color: var(--muted);
+font-size: 0.875rem;
+}
+
+tbody > tr:nth-child(2n) {
+background: var(--bg-muted);
+}
+
+th, td {
+padding: 0.75rem 1rem;
+border: 1px solid var(--bd-muted);
+text-align: left;
+}
+
+th {
+background: var(--bg-subtle);
+font-weight: 600;
+color: var(--primary-color);
+text-transform: uppercase;
+letter-spacing: 0.1rem;
+}
+
+td {
+color: var(--text-color);
+}
+
+table.center th, table.center td {
+text-align: center;
+}
+
+/* Hover effects for better interactivity */
+tbody tr:hover {
+background: var(--bg-hover);
+}
+
+th, td {
+transition: background-color 0.3s ease, color 0.3s ease;
+}</style>
+	</head>
+	<body>
+		<a href="#skip" class="visually-hidden">Skip to main content</a>
+
+		<header>
+			<a href="/" class="home-link">Dear Diary</a>
+			<nav>
+				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<ul class="nav">
+					<li class="nav-item"><a href="/" aria-current="page">Home</a></li>
+					<li class="nav-item"><a href="/blog/">Archive</a></li>
+					<li class="nav-item"><a href="/about/">About</a></li>
+					<li class="nav-item"><a href="/feed/feed.xml">Feed</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<main id="skip">
+			<heading-anchors>
+				<!-- Delete this block, which will also remove the component CSS from the bundle -->
+<div class="message-box">
+	<ol>
+		<li>Caution <code>active shape rotation</code> in progress</li>
+	</ol>
+	<!-- <p><em>This is an <a href="https://www.11ty.dev/">Eleventy project</a> created from the <a href="https://github.com/11ty/eleventy-base-blog"><code>eleventy-base-blog</code> repo</a>.</em></p> -->
+</div>
+<!-- Stop deleting -->
+
+
+
+<h1 id="latest-3-posts">Latest 3 Posts</h1>
+
+
+
+
+<ol reversed="" class="postlist">
+	<li class="postlist-item">
+		<a href="/blog/solidity_remaappings_and_imports/" class="postlist-link"><code>/blog/solidity_remaappings_and_imports/</code></a>
+		<time class="postlist-date" datetime="2025-03-06">March 2025</time>
+	</li>
+	<li class="postlist-item">
+		<a href="/blog/design_by_induction/" class="postlist-link"><code>/blog/design_by_induction/</code></a>
+		<time class="postlist-date" datetime="2025-03-06">March 2025</time>
+	</li>
+	<li class="postlist-item">
+		<a href="/blog/makerdao-documentation/" class="postlist-link">MakerDAO is a Lending Protocol not a Stablecoin</a>
+		<time class="postlist-date" datetime="2025-03-06">March 2025</time>
+	</li>
+</ol>
+
+
+
+
+<p>2 more posts can be found in <a href="/blog/">the archive</a>.</p>
+
+
+
+
+
+
+			</heading-anchors>
+		</main>
+
+		<footer>
+			<p><em>Built with ❄️ 💊 🚬 </em></p>
+		</footer>
+
+		<!-- This page `/` was built on 2025-03-06T13:12:56.930Z -->
+		<script type="module" src="/dist/xbxy_EL6cU.js"></script>
+	</body>
+</html>
