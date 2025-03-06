@@ -1,33 +1,44 @@
 {
-	"name": "dear_diary",
-	"version": "0.0.0",
-	"description": "A starter repository for a blog web site using the Eleventy site generator.",
-	"type": "module",
-	"scripts": {
-		"build": "npx @11ty/eleventy",
-		"build-nocolor": "cross-env NODE_DISABLE_COLORS=1 npx @11ty/eleventy",
-		"build-ghpages": "npx @11ty/eleventy --pathprefix=/eleventy-base-blog/",
-		"start": "npx @11ty/eleventy --serve --quiet",
-		"start-ghpages": "npx @11ty/eleventy --pathprefix=/eleventy-base-blog/ --serve --quiet",
-		"debug": "cross-env DEBUG=Eleventy* npx @11ty/eleventy",
-		"debugstart": "cross-env DEBUG=Eleventy* npx @11ty/eleventy --serve --quiet",
-		"benchmark": "cross-env DEBUG=Eleventy:Benchmark* npx @11ty/eleventy"
-	},
-	"devDependencies": {
-		"@11ty/eleventy": "^3.0.0",
-		"@11ty/eleventy-img": "^6.0.1",
-		"@11ty/eleventy-navigation": "^0.3.5",
-		"@11ty/eleventy-plugin-rss": "^2.0.3",
-		"@11ty/eleventy-plugin-syntaxhighlight": "^5.0.0",
-		"@biomejs/biome": "1.9.4",
-		"cross-env": "^7.0.3",
-		"gh-pages": "^6.3.0",
-		"luxon": "^3.5.0",
-		"prismjs": "^1.29.0",
-		"zod": "^3.24.2",
-		"zod-validation-error": "^3.4.0"
-	},
-	"dependencies": {
-		"@zachleat/heading-anchors": "^1.0.3"
-	}
+  "name": "dear_diary",
+  "version": "0.0.0",
+  "description": "A starter repository for a blog web site using the Eleventy site generator.",
+  "type": "module",
+  "scripts": {
+    "publish": " npx gh-pages --nojekyll -d _site/",
+    "build": "npx @11ty/eleventy",
+    "build-nocolor": "cross-env NODE_DISABLE_COLORS=1 npx @11ty/eleventy",
+    "build-ghpages": "npx @11ty/eleventy --pathprefix=/eleventy-base-blog/",
+    "start": "npx @11ty/eleventy --serve --quiet",
+    "start-ghpages": "npx @11ty/eleventy --pathprefix=/eleventy-base-blog/ --serve --quiet",
+    "debug": "cross-env DEBUG=Eleventy* npx @11ty/eleventy",
+    "debugstart": "cross-env DEBUG=Eleventy* npx @11ty/eleventy --serve --quiet",
+    "benchmark": "cross-env DEBUG=Eleventy:Benchmark* npx @11ty/eleventy"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.0.0",
+    "@11ty/eleventy-img": "^6.0.1",
+    "@11ty/eleventy-navigation": "^0.3.5",
+    "@11ty/eleventy-plugin-rss": "^2.0.3",
+    "@11ty/eleventy-plugin-syntaxhighlight": "^5.0.0",
+    "@biomejs/biome": "1.9.4",
+    "cross-env": "^7.0.3",
+    "gh-pages": "^6.3.0",
+    "luxon": "^3.5.0",
+    "prismjs": "^1.29.0",
+    "tailwindcss": "^3.4.17",
+    "tailwindcss-animate": "^1.0.7",
+    "tslib": "^2.8.1",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.2",
+    "zod": "^3.24.2",
+    "zod-validation-error": "^3.4.0"
+  },
+  "dependencies": {
+    "@zachleat/heading-anchors": "^1.0.3"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
+  }
 }
